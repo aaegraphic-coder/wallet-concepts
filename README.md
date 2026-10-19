@@ -17,4 +17,4 @@ Four small, clickable UX concepts for making a USDT wallet feel safe and simple 
 
 Designed by Angga Ady Ermawan, Senior Product Designer. Built as a single HTML file with AI-assisted prototyping tools.
 
-These are personal concepts made for a job application. Not affiliated with or endorsed by Tether or any wallet provider. Fees, exchange rates and names are examples only.
+These are personal concepts made for a job application. Not affiliated with or endorsed by any wallet provider. Fees, exchange rates and names are examples only.

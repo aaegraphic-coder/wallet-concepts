@@ -8,267 +8,1035 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#EDEBE5;--ground:#F6F5F1;--ink:#15171C;--muted:#5E6470;--line:#E4E2DC;--card:#FFFFFF;--accent:#2E4BDB;--accent-d:#1F35A8;--ok:#1E7A4C;--ok-bg:#E2F2E8;--bad:#8C1D16;--bad-bg:#FDECEA}
+:root{--bg:#EDEBE5;--ground:#F6F5F1;--ink:#15171C;--ink2:#3D424C;--muted:#5E6470;--line:#E4E2DC;--card:#FFFFFF;--accent:#2E4BDB;--accent-d:#1F35A8;--accent-bg:#E3E7FB;--ok:#1E7A4C;--ok-bg:#E2F2E8;--bad:#B3261E;--bad-d:#8C1D16;--bad-bg:#FDECEA;--amber-bg:#FFF4E0}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;min-height:100vh}
-.page{max-width:1080px;margin:0 auto;padding:40px 16px 64px;display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start;justify-content:center}
-.side{flex:1 1 320px;max-width:420px;display:flex;flex-direction:column;gap:16px}
-.side h1{font-size:32px;line-height:1.15;margin:0;letter-spacing:-.5px}
-.side p{margin:0;color:#3D424C;line-height:1.6}
+body{margin:0;color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;min-height:100vh;background:radial-gradient(900px 520px at 85% -10%,#DCE2FA 0%,rgba(220,226,250,0) 65%),radial-gradient(700px 500px at -10% 110%,#E6EFE4 0%,rgba(230,239,228,0) 60%),var(--bg)}
+.page{max-width:1120px;margin:0 auto;padding:40px 16px 64px;display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start;justify-content:center}
+.side{flex:1 1 340px;max-width:440px;display:flex;flex-direction:column;gap:16px;position:sticky;top:24px}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent-d)}
+.side h1{font-size:34px;line-height:1.12;margin:0;letter-spacing:-.8px}
+.side p{margin:0;color:var(--ink2);line-height:1.6}
 .tabs{display:flex;flex-direction:column;gap:8px}
-.tab{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:var(--card);font:inherit;color:var(--ink);cursor:pointer;transition:border-color .25s,box-shadow .2s,transform .16s}
-.tab:hover{box-shadow:0 6px 16px rgba(21,23,28,.08)}
+.tab{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.75);font:inherit;color:var(--ink);cursor:pointer;transition:border-color .25s,box-shadow .2s,transform .16s,background-color .25s}
+.tab:hover{box-shadow:0 6px 16px rgba(21,23,28,.08);background:#fff}
 .tab:active{transform:scale(.98)}
-.tab[aria-selected="true"]{border:2px solid var(--accent);padding:13px 15px}
+.tab[aria-selected="true"]{border:2px solid var(--accent);padding:13px 15px;background:#fff}
 .tab b{display:block;font-size:15px}
 .tab span{font-size:13px;color:var(--muted);line-height:1.45}
-.tab i{font-style:normal;width:28px;height:28px;border-radius:14px;background:#E3E7FB;color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
-.note{font-size:12px;color:var(--muted)}
-.phone{width:390px;max-width:100%;height:844px;border-radius:44px;background:var(--ground);box-shadow:0 30px 60px rgba(21,23,28,.18),0 0 0 10px #15171C;overflow:hidden;position:relative;flex-shrink:0}
-.screen{position:absolute;inset:0;display:flex;flex-direction:column;gap:16px;padding:56px 24px 24px;overflow-y:auto;animation:screenIn .42s cubic-bezier(.2,.8,.2,1) both}
-.screen>*{animation:rise .45s cubic-bezier(.2,.8,.2,1) both}
-.screen>*:nth-child(2){animation-delay:.05s}.screen>*:nth-child(3){animation-delay:.1s}.screen>*:nth-child(4){animation-delay:.15s}.screen>*:nth-child(5){animation-delay:.2s}.screen>*:nth-child(6){animation-delay:.25s}.screen>*:nth-child(7){animation-delay:.3s}
+.tab i{font-style:normal;width:28px;height:28px;border-radius:14px;background:var(--accent-bg);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;transition:background-color .25s,color .25s}
+.tab[aria-selected="true"] i{background:var(--accent);color:#fff}
+.dnote{background:var(--ink);color:#fff;border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;box-shadow:0 14px 30px rgba(21,23,28,.16)}
+.dnote .lab{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#AEB6FF;display:flex;justify-content:space-between;gap:8px}
+.dnote p{color:#E6E8EE;font-size:14px;line-height:1.6;margin:0}
+.dnote p.swap{animation:fadeUp .35s ease both}
+.dnote .rst{align-self:flex-start;background:transparent;border:1px solid #3A3D46;color:#fff;border-radius:12px;min-height:36px;padding:0 12px;font-size:12px;font-weight:600}
+.note{font-size:12px;color:var(--muted);line-height:1.5}
+.keys{font-size:12px;color:var(--ink2);line-height:1.5;display:flex;gap:8px;align-items:flex-start}
+.keys kbd{font-family:'JetBrains Mono',monospace;font-size:11px;border:1px solid var(--line);border-bottom-width:2px;background:#fff;border-radius:6px;padding:1px 6px}
+
+/* phone */
+.phone{width:390px;max-width:100%;height:844px;border-radius:52px;background:var(--ground);box-shadow:0 40px 80px rgba(21,23,28,.22),0 0 0 11px #15171C,0 0 0 13px #2A2D35;overflow:hidden;position:relative;flex-shrink:0;isolation:isolate}
+.sbar{position:absolute;top:0;left:0;right:0;height:50px;display:flex;align-items:center;justify-content:space-between;padding:6px 30px 0 34px;font-size:15px;font-weight:700;z-index:30;pointer-events:none}
+.island{position:absolute;top:11px;left:50%;width:118px;height:34px;margin-left:-59px;border-radius:20px;background:#0B0C0F;z-index:31;pointer-events:none}
+.sicons{display:flex;gap:6px;align-items:center}
+.homebar{position:absolute;bottom:8px;left:50%;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:#15171C;opacity:.85;z-index:31;pointer-events:none}
+#host{position:absolute;inset:0}
+#layer{position:absolute;inset:0;pointer-events:none;z-index:40;overflow:hidden}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;gap:16px;padding:58px 22px 30px;overflow-y:auto;overflow-x:hidden;animation:screenIn .42s cubic-bezier(.2,.8,.2,1) both;scrollbar-width:none}
+.screen::-webkit-scrollbar{display:none}
+.screen>*{animation:rise .45s cubic-bezier(.2,.8,.2,1) both;flex-shrink:0}
+.screen>*:nth-child(2){animation-delay:.04s}.screen>*:nth-child(3){animation-delay:.08s}.screen>*:nth-child(4){animation-delay:.12s}.screen>*:nth-child(5){animation-delay:.16s}.screen>*:nth-child(6){animation-delay:.2s}.screen>*:nth-child(7){animation-delay:.24s}.screen>*:nth-child(8){animation-delay:.28s}
+.screen.still,.screen.still>*{animation:none}
 .center{align-items:center;text-align:center}
-@keyframes screenIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+@keyframes screenIn{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
 @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes popIn{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}
-@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
 @keyframes glow{0%,100%{background:#FAD4CF}50%{background:#F5A99F}}
-button{font:inherit;cursor:pointer;color:var(--ink);transition:transform .16s cubic-bezier(.2,.8,.2,1),box-shadow .2s,background-color .25s,border-color .25s}
+@keyframes blink{50%{opacity:0}}
+@keyframes sheen{from{transform:translateX(-120%) skewX(-20deg)}to{transform:translateX(260%) skewX(-20deg)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(46,75,219,.35)}100%{box-shadow:0 0 0 34px rgba(46,75,219,0)}}
+@keyframes radar{0%{transform:scale(.6);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes toastIn{from{transform:translateY(-130%);opacity:0}to{transform:none;opacity:1}}
+@keyframes fall{0%{transform:translate(0,0) rotate(0);opacity:1}25%{transform:translate(calc(var(--dx)*.45),-110px) rotate(calc(var(--r)*.3));opacity:1}100%{transform:translate(var(--dx),460px) rotate(var(--r));opacity:0}}
+@keyframes txIn{0%{background:var(--accent-bg)}100%{background:transparent}}
+@keyframes qrIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+
+button{font:inherit;cursor:pointer;color:var(--ink);transition:transform .16s cubic-bezier(.2,.8,.2,1),box-shadow .2s,background-color .25s,border-color .25s,color .25s,opacity .25s;-webkit-tap-highlight-color:transparent}
 button:hover{box-shadow:0 6px 16px rgba(21,23,28,.08)}
 button:active{transform:scale(.97)}
 button:disabled{cursor:not-allowed;box-shadow:none}
 button:focus-visible,input:focus-visible,.tab:focus-visible{outline:3px solid rgba(46,75,219,.45);outline-offset:2px}
 .h{font-size:20px;font-weight:700;margin:0}
+.h1{font-size:26px;font-weight:800;letter-spacing:-.5px;line-height:1.2}
 .row{display:flex;align-items:center;gap:12px}
-.back{width:44px;height:44px;border-radius:22px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center}
+.col{display:flex;flex-direction:column;gap:14px}
+.back{width:44px;height:44px;border-radius:22px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px}
-.cta{height:56px;border-radius:18px;border:0;background:var(--ink);color:#fff;font-size:16px;font-weight:700;margin-top:auto;flex-shrink:0}
+.cta{height:56px;border-radius:18px;border:0;background:var(--ink);color:#fff;font-size:16px;font-weight:700;margin-top:auto;display:flex;align-items:center;justify-content:center;gap:8px;width:100%}
 .cta.blue{background:var(--accent)}
+.cta.red{background:var(--bad)}
 .cta:disabled{background:#A7ABB4}
-.ghost{min-height:48px;border-radius:18px;border:1px solid var(--line);background:var(--card);font-size:14px;font-weight:600;flex-shrink:0}
+.ghost{min-height:48px;border-radius:18px;border:1px solid var(--line);background:var(--card);font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;width:100%}
 .muted{color:var(--muted)}
 .small{font-size:13px}
+.tiny{font-size:12px}
+.err{color:var(--bad)}
+p{margin:0;line-height:1.55}
+.sec{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink2);background:#fff;border:1px solid var(--line);padding:6px 10px;border-radius:20px}
 .pick{display:flex;align-items:center;gap:12px;padding:14px;border-radius:18px;border:1px solid var(--line);background:var(--card);text-align:left;width:100%}
-.avatar{width:44px;height:44px;border-radius:22px;background:#E3E7FB;color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
-.badge{font-size:11px;font-weight:700;color:var(--ok);background:var(--ok-bg);padding:4px 8px;border-radius:10px}
+.pick.dashed{border-style:dashed;background:transparent}
+.list{display:flex;flex-direction:column;gap:10px}
+.avatar{width:44px;height:44px;border-radius:22px;background:var(--accent-bg);color:var(--accent-d);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+.avatar.sm{width:38px;height:38px;font-size:13px}
+.badge{font-size:11px;font-weight:700;color:var(--ok);background:var(--ok-bg);padding:4px 8px;border-radius:10px;white-space:nowrap}
 .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .chip{height:46px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-size:14px;font-weight:700}
-.chip.on{border:2px solid var(--accent)}
-.okc{width:84px;height:84px;border-radius:42px;background:var(--ok);display:flex;align-items:center;justify-content:center;animation:popIn .5s .1s cubic-bezier(.2,.8,.2,1) both}
+.chip.on{border:2px solid var(--accent);color:var(--accent-d)}
+.chip.big{height:56px;font-size:16px}
+.chip.bad{border:2px solid var(--bad);color:var(--bad)}
+.shake{animation:shake .5s ease-in-out!important}
+.okc{width:88px;height:88px;border-radius:44px;background:var(--ok);display:flex;align-items:center;justify-content:center;animation:popIn .5s .1s cubic-bezier(.2,.8,.2,1) both;box-shadow:0 12px 30px rgba(30,122,76,.3)}
 .okc path{stroke-dasharray:60;stroke-dashoffset:60;animation:draw .55s .35s ease-out forwards}
+.screen.still .okc path{animation:none;stroke-dashoffset:0}
 .mono{font-family:'JetBrains Mono',monospace;font-size:15px;word-break:break-all;line-height:1.6}
-.diff{background:#FAD4CF;color:var(--bad);padding:1px 2px;border-radius:4px;animation:glow 1.6s .9s ease-in-out 2}
+.diff{background:#FAD4CF;color:var(--bad-d);padding:1px 2px;border-radius:4px;animation:glow 1.6s .9s ease-in-out 2}
 .same{background:#DCEFE3;color:#13502F;padding:1px 2px;border-radius:4px}
-.warn{background:var(--bad-bg);border:1px solid #F1B8B2;border-radius:22px;padding:18px;animation:rise .45s .05s both,shake .55s .55s ease-in-out}
+.warn{background:var(--bad-bg);border:1px solid #F1B8B2;border-radius:22px;padding:18px}
+.screen>.warn{animation:rise .45s .04s both,shake .55s .6s ease-in-out}
 .kv{display:flex;justify-content:space-between;font-size:14px}
-.route{background:#E9EDFC;border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
-.link{align-self:flex-start;min-height:44px;border:0;background:transparent;color:var(--accent-d);font-size:13px;font-weight:700;text-decoration:underline;padding:0 2px}
+.kv.total{padding-top:12px;border-top:1px solid #EEECE6;font-size:15px}
+.route{background:#E9EDFC;border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;font-size:13px;color:#2B3570;line-height:1.5}
+.route b{color:var(--accent-d);font-size:14px}
+.link{min-height:36px;border:0;background:transparent;color:var(--accent-d);font-size:13px;font-weight:700;text-decoration:underline;padding:0 2px}
 .link:hover{box-shadow:none}
-.amount{width:200px;border:0;background:transparent;font:inherit;font-size:56px;font-weight:800;letter-spacing:-1.5px;color:var(--ink);outline:none}
-.bars{display:flex;gap:6px}.bars div{flex:1;height:4px;border-radius:2px;background:#DDDBD4;transition:background-color .45s}.bars div.on{background:var(--accent)}
 .foot{font-size:11px;color:#6B707B;text-align:center;margin-top:auto}
-@media (max-width:440px){.phone{border-radius:0;box-shadow:none;height:780px}.page{padding:24px 0 48px}.side{padding:0 16px}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.okc path{stroke-dashoffset:0}}
+
+/* home */
+.bal{position:relative;overflow:hidden;background:linear-gradient(140deg,#15171C 0%,#1C2246 55%,#2A3A9E 100%);color:#fff;border-radius:26px;padding:22px;display:flex;flex-direction:column;gap:4px;box-shadow:0 18px 36px rgba(31,53,168,.25)}
+.bal::after{content:'';position:absolute;top:0;bottom:0;width:40%;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.12),rgba(255,255,255,0));animation:sheen 3.2s 1s ease-in-out infinite;pointer-events:none}
+.bal .big{font-size:40px;font-weight:800;letter-spacing:-1px;font-variant-numeric:tabular-nums}
+.eye{width:36px;height:36px;border-radius:18px;border:0;background:rgba(255,255,255,.12);color:#fff;display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+.acts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:16px;position:relative;z-index:1}
+.act{display:flex;flex-direction:column;align-items:center;gap:6px;border:0;background:transparent;color:#fff;font-size:12px;font-weight:600;padding:0}
+.act span{width:48px;height:48px;border-radius:16px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;transition:background-color .2s}
+.act:first-child span{background:#fff;color:var(--ink)}
+.act:hover{box-shadow:none}.act:hover span{background:rgba(255,255,255,.24)}.act:first-child:hover span{background:#E9EDFC}
+.quick{display:flex;gap:14px}
+.q{display:flex;flex-direction:column;align-items:center;gap:6px;border:0;background:transparent;font-size:12px;font-weight:600;padding:0;width:64px}
+.q:hover{box-shadow:none}.q:hover .avatar{transform:translateY(-2px);box-shadow:0 8px 16px rgba(21,23,28,.12)}
+.q .avatar{width:52px;height:52px;transition:transform .2s,box-shadow .2s}
+.tx{display:flex;align-items:center;gap:12px;padding:12px 8px;margin:0 -8px;border-bottom:1px solid var(--line);border-radius:12px}
+.tx.fresh{animation:txIn 2.4s ease-out}
+.tx .avatar{width:40px;height:40px;background:#fff;border:1px solid var(--line);color:var(--ink);font-size:13px}
+
+/* send */
+.search{display:flex;align-items:center;gap:10px;height:48px;border-radius:14px;border:1px solid var(--line);background:#fff;padding:0 14px;color:var(--muted)}
+.search input{flex:1;border:0;outline:0;font:inherit;font-size:15px;background:transparent;color:var(--ink)}
+.amtbox{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 0 4px;text-align:center}
+.amtv{font-size:54px;font-weight:800;letter-spacing:-1.5px;line-height:1.1;font-variant-numeric:tabular-nums;display:flex;align-items:center}
+.amtv.bad{color:var(--bad)}
+.caret{display:inline-block;width:3px;height:44px;background:var(--accent);margin-left:4px;border-radius:2px;animation:blink 1s steps(1) infinite}
+.pad{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.key{height:54px;border:0;border-radius:16px;background:transparent;font-size:24px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.key:hover{background:#ECEAE4;box-shadow:none}
+.key:active{background:#E2E0D9}
+.netrow{display:flex;justify-content:space-between;align-items:center;min-height:58px;padding:8px 16px;border-radius:16px;border:1px solid var(--line);background:#fff;text-align:left;width:100%;font-size:14px}
+.netrow.on{border:2px solid var(--accent)}
+.netrow.no{background:#FAF9F6;color:#80858F}
+.hold{position:relative;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:none}
+.hold::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.24);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+.hold.holding::before{transform:scaleX(1);transition:transform 1.1s linear}
+.hold.holding{transform:scale(.98)}
+.hold span,.hold svg{position:relative}
+.hint{font-size:12px;color:var(--muted);text-align:center;margin-top:-6px}
+.spinw{width:76px;height:76px;position:relative}
+.spin{position:absolute;inset:0;border-radius:50%;border:5px solid var(--line);border-top-color:var(--accent);animation:spin .9s linear infinite}
+.tl{display:flex;flex-direction:column;gap:14px;text-align:left;width:100%}
+.tlr{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600;color:#9AA0AA;transition:color .3s}
+.tlr .dot{width:24px;height:24px;border-radius:12px;border:2px solid var(--line);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background-color .3s,border-color .3s}
+.tlr.ok{color:var(--ink)}
+.tlr.ok .dot{background:var(--ok);border-color:var(--ok)}
+.tlr.ok .dot::after{content:'';width:9px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+.tlr .t{margin-left:auto;font-size:12px;color:var(--muted);font-weight:500}
+.newaddr{background:var(--amber-bg);border:1px solid #F0CF94;border-radius:16px;padding:12px 14px;font-size:13px;line-height:1.5;color:#5A3B00}
+
+/* sheets & toasts */
+.sheet-wrap{position:absolute;inset:0;z-index:20}
+.scrim{position:absolute;inset:0;background:rgba(21,23,28,.38);animation:fadeIn .25s ease both}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--ground);border-radius:30px 30px 0 0;padding:12px 22px 32px;display:flex;flex-direction:column;gap:12px;animation:sheetUp .38s cubic-bezier(.2,.8,.2,1) both;max-height:86%;overflow-y:auto}
+.sheet-wrap.still .scrim,.sheet-wrap.still .sheet{animation:none}
+.grab{width:40px;height:5px;border-radius:3px;background:#CFCCC4;align-self:center;margin-bottom:6px}
+.toast{position:absolute;top:58px;left:16px;right:16px;background:var(--ink);color:#fff;border-radius:18px;padding:13px 16px;font-size:13px;line-height:1.45;font-weight:600;box-shadow:0 14px 30px rgba(21,23,28,.25);animation:toastIn .38s cubic-bezier(.2,.8,.2,1) both;transition:transform .35s ease,opacity .35s ease;display:flex;gap:10px;align-items:flex-start}
+.toast.bad{background:var(--bad-d)}
+.toast.ok{background:#13502F}
+.toast.out{transform:translateY(-130%);opacity:0}
+.toast.banner{background:rgba(255,255,255,.96);color:var(--ink);border:1px solid var(--line);backdrop-filter:blur(10px)}
+.toast .appi{width:36px;height:36px;border-radius:10px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800}
+.cf{position:absolute;top:34%;width:8px;height:13px;border-radius:2px;animation:fall 1.9s cubic-bezier(.2,.6,.4,1) forwards}
+
+/* look-alike */
+.addrbox{background:#fff;border:2px solid var(--line);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-height:86px;transition:border-color .25s}
+.addrbox.filled{border-color:var(--accent)}
+.ph{color:#A7ABB4;font-family:'Plus Jakarta Sans',sans-serif}
+.tip{display:flex;gap:10px;align-items:flex-start;background:var(--accent-bg);color:#2B3570;border-radius:16px;padding:12px 14px;font-size:13px;line-height:1.5}
+.tip svg{flex-shrink:0;margin-top:1px}
+.radar{width:96px;height:96px;border-radius:48px;background:var(--accent);display:flex;align-items:center;justify-content:center;position:relative}
+.radar::before,.radar::after{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid var(--accent);animation:radar 1.6s ease-out infinite}
+.radar::after{animation-delay:.8s}
+.cgrid{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:3px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700}
+.cgrid span{height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;background:#F1EFEA}
+.cgrid span.x{background:#FAD4CF;color:var(--bad-d)}
+.cgrid.saved span.x{background:#DCEFE3;color:#13502F}
+.checkbtn{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:14px;border-radius:16px;border:1px solid var(--line);background:#fff;font-size:14px;line-height:1.45;font-weight:600;width:100%}
+.checkbtn .box{width:24px;height:24px;border-radius:7px;border:2px solid #B9BDC6;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background-color .2s,border-color .2s}
+.checkbtn.on{border-color:var(--accent)}
+.checkbtn.on .box{background:var(--accent);border-color:var(--accent)}
+.ringw{position:relative;width:168px;height:168px}
+.ringw svg{display:block}
+.ringt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:34px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-1px}
+.ringt small{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:0}
+
+/* request */
+.seg{display:flex;gap:4px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:4px}
+.seg button{min-height:38px;padding:0 14px;border-radius:10px;border:0;background:transparent;font-size:13px;font-weight:700}
+.seg button.on{background:var(--ink);color:#fff}
+.seg button:hover{box-shadow:none}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--accent) var(--p),#DDDBD4 var(--p));outline:none;margin:6px 0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:14px;background:#fff;border:3px solid var(--accent);box-shadow:0 4px 10px rgba(21,23,28,.18);cursor:grab}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:12px;background:#fff;border:3px solid var(--accent);cursor:grab}
+.field{display:flex;flex-direction:column;gap:6px}
+.field input,.pwbox input{height:50px;border-radius:14px;border:1px solid var(--line);background:#fff;padding:0 14px;font:inherit;font-size:15px;color:var(--ink);width:100%;transition:border-color .2s,box-shadow .2s}
+.field input:focus,.pwbox input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px rgba(46,75,219,.15)}
+.ratel{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)}
+.ratel b{color:var(--ink);font-variant-numeric:tabular-nums}
+.qrcard{align-items:center;text-align:center;border-radius:26px;padding:22px}
+.qr{width:176px;height:176px;padding:10px;border-radius:18px;background:#fff;border:1px solid var(--line);animation:qrIn .5s .15s cubic-bezier(.2,.8,.2,1) both}
+.screen.still .qr{animation:none}
+.linkpill{width:100%;display:flex;align-items:center;gap:8px;background:var(--ground);border-radius:14px;padding:6px 6px 6px 14px;font-size:13px;color:var(--ink2)}
+.linkpill span{flex:1;text-align:left}
+.mini{min-height:36px;border-radius:10px;border:0;background:var(--ink);color:#fff;font-size:12px;font-weight:700;padding:0 12px;display:flex;align-items:center;gap:6px}
+.mini.done{background:var(--ok)}
+.apps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.app{display:flex;flex-direction:column;align-items:center;gap:8px;border:0;background:transparent;font-size:12px;font-weight:600;padding:6px 0}
+.app:hover{box-shadow:none}
+.app i{font-style:normal;width:56px;height:56px;border-radius:18px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:800;transition:transform .2s}
+.app:hover i{transform:translateY(-2px)}
+.pulsew{width:96px;height:96px;border-radius:48px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;animation:pulse 1.6s ease-out infinite}
+
+/* backup */
+.bars{display:flex;gap:6px}.bars div{flex:1;height:4px;border-radius:2px;background:#DDDBD4;transition:background-color .45s}.bars div.on{background:var(--accent)}
+.ans{min-height:58px;padding:12px 16px;border-radius:16px;border:1px solid var(--line);background:#fff;text-align:left;font-size:15px;font-weight:600;width:100%}
+.ans.right{border:2px solid var(--ok);background:#F3FAF5}
+.ans.wrong{border:2px solid var(--bad);background:#FFF8F7}
+.fb{font-size:14px;line-height:1.5;padding:12px 14px;border-radius:14px;animation:fadeUp .3s ease both}
+.opt{display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:18px;border:1px solid var(--line);background:#fff;text-align:left;width:100%}
+.opt.on{border:2px solid var(--accent)}
+.pwbox{position:relative;display:block}
+.pwbox input{padding-right:54px}
+.eye2{position:absolute;right:6px;top:5px;width:40px;height:40px;border-radius:12px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.eye2:hover{box-shadow:none;background:var(--ground)}
+.meter{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.meter i{height:6px;border-radius:3px;background:#DDDBD4;transition:background-color .3s}
+.meter.s1 i:nth-child(1){background:var(--bad)}
+.meter.s2 i:nth-child(-n+2){background:#D68A00}
+.meter.s3 i{background:var(--ok)}
+.ck{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);transition:color .25s}
+.ck .box{width:20px;height:20px;border-radius:10px;border:2px solid #C9CCD3;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background-color .25s,border-color .25s}
+.ck.ok{color:var(--ink)}
+.ck.ok .box{background:var(--ok);border-color:var(--ok)}
+.ck.ok .box::after,.checkbtn.on .box::after{content:'';width:8px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+.words{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;border-radius:20px}
+.words>div:not(.veil){background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 8px;font-size:14px;font-weight:700;display:flex;gap:6px;align-items:baseline;filter:blur(7px);transition:filter .25s}
+.words>div i{font-style:normal;font-size:11px;color:var(--muted);font-weight:600}
+.words .veil{position:absolute;inset:0;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--ink2);transition:opacity .25s;pointer-events:none}
+.words.shown>div:not(.veil){filter:none}
+.words.shown .veil{opacity:0}
+.reveal.holding{background:var(--ink);color:#fff;border-color:var(--ink)}
+.dots3{display:flex;gap:8px;justify-content:center}
+.dots3 span{width:10px;height:10px;border-radius:5px;background:#DDDBD4;transition:background-color .3s,width .3s}
+.dots3 span.ok{background:var(--ok)}
+.dots3 span.now{background:var(--accent);width:26px}
+
+.brief{background:#fff;border:1px solid var(--line);border-radius:20px;padding:6px 18px;display:flex;flex-direction:column}
+.brief>div{display:flex;flex-direction:column;gap:3px;padding:12px 0;animation:fadeUp .35s ease both}
+.brief>div+div{border-top:1px solid #EEECE6}
+.brief b{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent-d)}
+.brief span{font-size:13px;line-height:1.55;color:var(--ink2)}
+.new{font-style:normal;font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;background:#F2B33D;color:#3A2600;padding:2px 6px;border-radius:6px;vertical-align:2px;margin-left:4px}
+.phone.dark .sbar{color:#fff}.phone.dark .homebar{background:#fff}
+.sbar{color:#15171C}
+.vf{position:relative;width:250px;height:250px;border-radius:28px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04)}
+.vfq{width:170px;height:170px;padding:10px;background:#fff;border-radius:12px;opacity:.92;transition:transform .3s,box-shadow .3s}
+.vf.found .vfq{transform:scale(1.05);box-shadow:0 0 0 6px #1E7A4C}
+.cn{position:absolute;width:40px;height:40px;border-color:#fff;border-style:solid;border-width:0;transition:border-color .3s}
+.vf.found .cn{border-color:#4ED38A}
+.cn.tl{top:0;left:0;border-top-width:4px;border-left-width:4px;border-top-left-radius:18px}.cn.tr{top:0;right:0;border-top-width:4px;border-right-width:4px;border-top-right-radius:18px}.cn.bl{bottom:0;left:0;border-bottom-width:4px;border-left-width:4px;border-bottom-left-radius:18px}.cn.br{bottom:0;right:0;border-bottom-width:4px;border-right-width:4px;border-bottom-right-radius:18px}
+.scanline{position:absolute;left:18px;right:18px;height:3px;border-radius:2px;background:#4ED38A;box-shadow:0 0 18px 4px rgba(78,211,138,.6);animation:scan 1.8s ease-in-out infinite alternate}
+.vf.found .scanline{opacity:0}
+@keyframes scan{from{top:22px}to{top:225px}}
+/* micro-interactions */
+@keyframes screenInRev{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:none}}
+.screen.rev{animation-name:screenInRev}
+@keyframes digitPop{0%{transform:translateY(10px) scale(.7);opacity:0}60%{transform:translateY(-2px) scale(1.08);opacity:1}100%{transform:none}}
+.pop{display:inline-block;animation:digitPop .28s cubic-bezier(.2,.8,.2,1)}
+.hold svg{vertical-align:-3px}
+.hold.held{background:var(--ok)!important;transform:scale(1.02)}
+.hold.held::before{transform:scaleX(0)}
+.xfer{display:flex;align-items:center;gap:10px;width:100%;max-width:300px}
+.xfer .track{flex:1;position:relative;height:28px}
+.xfer .track::before{content:'';position:absolute;left:0;right:0;top:13px;border-top:2px dashed #C9CCD3}
+.coin{position:absolute;top:0;left:0;width:28px;height:28px;border-radius:14px;background:var(--accent);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;animation:coinMove 1.1s cubic-bezier(.45,0,.55,1) infinite;box-shadow:0 6px 14px rgba(46,75,219,.35)}
+@keyframes coinMove{0%{left:0;opacity:0;transform:scale(.6)}15%{opacity:1;transform:none}85%{opacity:1;transform:none}100%{left:calc(100% - 28px);opacity:0;transform:scale(.6)}}
+.xfer .dest{animation:catch 1.1s ease-in-out infinite}
+@keyframes catch{0%,80%{transform:none}90%{transform:scale(1.1)}100%{transform:none}}
+.flipc{width:88px;height:88px;perspective:500px}
+.flipc .in{position:relative;width:100%;height:100%;transform-style:preserve-3d;animation:flipY 1.6s ease-in-out infinite}
+.flipc .f{position:absolute;inset:0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:17px;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18),0 10px 22px rgba(21,23,28,.18)}
+.flipc .f1{background:var(--accent)}.flipc .f2{background:var(--ok);transform:rotateY(180deg);font-size:22px}
+@keyframes flipY{0%,20%{transform:rotateY(0)}50%,70%{transform:rotateY(180deg)}100%{transform:rotateY(360deg)}}
+.scanchars{font-size:13px;max-width:300px}
+.scanchars span{animation:scanChar .7s both;animation-delay:calc(var(--i) * 45ms);border-radius:3px}
+@keyframes scanChar{0%{color:#B9BDC6;background:transparent}35%{color:#fff;background:var(--accent)}100%{color:var(--ink);background:transparent}}
+.cgrid span.x{animation:flagIn .35s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * 22ms)}
+@keyframes flagIn{from{background:#F1EFEA;color:var(--ink);transform:scale(.7)}}
+.checkbtn.on .box{animation:boxPop .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes boxPop{0%{transform:scale(.6)}70%{transform:scale(1.15)}100%{transform:none}}
+.ck.ok .box{animation:boxPop .3s cubic-bezier(.2,.8,.2,1)}
+.ans{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.mark{width:26px;height:26px;border-radius:13px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:800;animation:boxPop .35s both;flex-shrink:0}
+.mark.g{background:var(--ok)}.mark.r{background:var(--bad)}
+.words>div:not(.veil){transition:filter .25s,transform .25s}
+.words.shown>div:not(.veil){transition-delay:calc(var(--i) * 25ms);transform:translateY(-1px)}
+.qswap{animation:fadeUp .3s ease both}
+@keyframes okBump{0%{transform:none}50%{transform:scale(1.06)}100%{transform:none}}
+.chip.good{border:2px solid var(--ok);background:var(--ok-bg);color:#13502F;animation:okBump .35s ease}
+.mini.done{animation:okBump .35s ease}
+.flipin{animation:flipX .4s cubic-bezier(.2,.8,.2,1)}
+@keyframes flipX{from{transform:rotateX(90deg);opacity:0}to{transform:none;opacity:1}}
+.swapv{display:inline-block;animation:fadeUp .3s ease}
+.qra rect{transform-box:fill-box;transform-origin:center;animation:qrPix .3s both;animation-delay:calc(var(--d) * 14ms)}
+@keyframes qrPix{from{opacity:0;transform:scale(.2)}}
+.screen.still .qra rect{animation:none}
+.vf::after{content:'';position:absolute;inset:0;border-radius:28px;background:#fff;opacity:0;pointer-events:none}
+.vf.found::after{animation:flash .45s ease-out}
+@keyframes flash{0%{opacity:.55}100%{opacity:0}}
+.cn{transition:border-color .3s,transform .3s cubic-bezier(.2,.8,.2,1)}
+.vf.found .cn.tl{transform:translate(22px,22px)}.vf.found .cn.tr{transform:translate(-22px,22px)}.vf.found .cn.bl{transform:translate(22px,-22px)}.vf.found .cn.br{transform:translate(-22px,-22px)}
+.ratel.soon{color:#B26B00}.ratel.soon b{color:#B26B00;animation:blink 1s steps(1) infinite}
+.key{position:relative;overflow:hidden}
+.key:active{transform:scale(.92)}
+@media (max-width:900px){.side{position:static}}
+@media (max-width:440px){.phone{border-radius:0;box-shadow:none;height:800px}.page{padding:24px 0 48px;gap:28px}.side{padding:0 16px}.sbar,.island,.homebar{display:none}.screen{padding-top:24px}.toast{top:16px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.okc path{stroke-dashoffset:0}}
 </style>
 </head>
 <body>
 <main class="page">
   <section class="side">
+    <div class="kicker">UX concepts · Angga Ady Ermawan</div>
     <h1>Stablecoin wallet concepts</h1>
-    <p>Four small ideas for making USDT wallets feel safe and simple for everyday people. Tap through them on the phone.</p>
+    <p>Five small ideas for making USDT wallets feel safe, simple and useful for everyday people in Indonesia. Everything on the phone is clickable.</p>
     <div class="tabs" role="tablist" aria-label="Concepts" id="tabs"></div>
-    <p class="note">Concepts by Angga Ady Ermawan, built with AI-assisted prototyping tools. Not affiliated with or endorsed any wallet provider. Fees, rates and names are examples.</p>
+    <div class="brief" id="brief"></div>
+    <div class="dnote" aria-live="polite">
+      <div class="lab"><span>Design note</span><span id="nstep"></span></div>
+      <p id="ntext"></p>
+      <button class="rst" id="restart">Restart this concept</button>
+    </div>
+    <div class="keys"><span>Tip:</span><span>buttons that say <b>Hold</b> need a press and hold. On amount screens you can type with <kbd>0–9</kbd> and <kbd>⌫</kbd>. In concept 1, "Scan" opens concept 5.</span></div>
+    <p class="note">Concepts by Angga Ady Ermawan, built with AI-assisted prototyping tools. Not affiliated with or endorsed by any wallet provider. Fees, rates, names and the QR code are examples.</p>
   </section>
-  <div class="phone" id="phone" aria-live="polite"></div>
+  <div class="phone" id="phone">
+    <div class="sbar"><span id="clock">9:41</span><span class="sicons"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5" width="3" height="7" rx="1" fill="currentColor"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx="1" fill="currentColor"/></svg><svg width="26" height="13" viewBox="0 0 26 13" aria-hidden="true"><rect x=".5" y=".5" width="22" height="12" rx="3.5" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="16" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity=".4"/></svg></span></div>
+    <div class="island"></div>
+    <div id="host" aria-live="polite"></div>
+    <div id="layer"></div>
+    <div class="homebar"></div>
+  </div>
 </main>
 <script>
-const $ = (s) => document.querySelector(s);
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const money = (n) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const rp = (n) => 'Rp ' + Math.round(n).toLocaleString('id-ID');
+const usdtF = (n) => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const mmss = (s) => Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const vib = (p) => { try { navigator.vibrate && navigator.vibrate(p); } catch (e) {} };
+const sv = (d, w = 18, sw = 2.2) => `<svg aria-hidden="true" width="${w}" height="${w}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
 const icon = {
-  back: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
-  check: '<svg aria-hidden="true" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
-  shield: '<svg aria-hidden="true" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7z"/><path d="M9 12l2 2 4-4"/></svg>',
-  send: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg>',
-  warn: '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4"/><path d="M12 17.5v.5"/></svg>'
+  back: sv('<path d="M15 18l-6-6 6-6"/>'),
+  send: sv('<path d="M7 17L17 7"/><path d="M8 7h9v9"/>', 20),
+  recv: sv('<path d="M17 7L7 17"/><path d="M16 17H7V8"/>', 20),
+  plus: sv('<path d="M12 5v14"/><path d="M5 12h14"/>', 20),
+  scan: sv('<path d="M4 8V5a1 1 0 011-1h3"/><path d="M16 4h3a1 1 0 011 1v3"/><path d="M20 16v3a1 1 0 01-1 1h-3"/><path d="M8 20H5a1 1 0 01-1-1v-3"/><path d="M4 12h16"/>', 20),
+  eye: sv('<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'),
+  eyeOff: sv('<path d="M3 3l18 18"/><path d="M10.6 5.1A10.4 10.4 0 0112 5c6.5 0 10 7 10 7a17 17 0 01-3.2 4.1"/><path d="M6.6 6.6C3.9 8.4 2 12 2 12s3.5 7 10 7a9.7 9.7 0 005.4-1.6"/><path d="M9.9 9.9a3 3 0 004.2 4.2"/>'),
+  lock: sv('<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>', 14),
+  search: sv('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>'),
+  copy: sv('<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a1 1 0 011-1h10"/>', 16),
+  share: sv('<path d="M12 3v13"/><path d="M7 8l5-5 5 5"/><path d="M5 14v5a2 2 0 002 2h10a2 2 0 002-2v-5"/>'),
+  clock: sv('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', 40, 2),
+  check: sv('<path d="M5 12.5l4.5 4.5L19 7.5"/>', 42, 2.6).replace('currentColor', '#fff'),
+  shield: sv('<path d="M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7z"/><path d="M9 12l2 2 4-4"/>', 42, 2.4).replace('currentColor', '#fff'),
+  shieldS: sv('<path d="M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7z"/>', 18),
+  shieldW: sv('<path d="M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7z"/>', 44, 2).replace('currentColor', '#fff'),
+  warn: sv('<path d="M12 3l9.5 17h-19z"/><path d="M12 10v4"/><path d="M12 17.5v.5"/>', 22),
+  del: sv('<path d="M21 5H9l-6 7 6 7h12a1 1 0 001-1V6a1 1 0 00-1-1z"/><path d="M12 9l6 6"/><path d="M18 9l-6 6"/>', 24, 2),
+  tick: '',
+  tickS: sv('<path d="M5 12.5l4.5 4.5L19 7.5"/>', 18, 2.8)
 };
 const backBtn = (to) => `<button class="back" data-go="${to}" aria-label="Back">${icon.back}</button>`;
+const hdr = (back, title, sub) => `<div class="row">${back ? backBtn(back) : ''}<div>${sub ? `<div class="small muted">${sub}</div>` : ''}<h2 class="h">${title}</h2></div></div>`;
+const holdBtn = (name, label, disabled = false, cls = '') => `<button class="cta hold ${cls}" data-hold="${name}" ${disabled ? 'disabled' : ''} aria-label="${esc(label)}. Press and hold to confirm"><span>${label}</span></button>`;
+const sheet = (name, title, inner) => `<div class="sheet-wrap" data-sheet="${name}"><div class="scrim" data-close></div><div class="sheet" role="dialog" aria-label="${esc(title)}"><div class="grab"></div><div class="h">${title}</div>${inner}</div></div>`;
+const keypad = (idr) => `<div class="pad">${['1','2','3','4','5','6','7','8','9',idr ? '000' : '.','0','del'].map((k) => `<button class="key" data-key="${k}" aria-label="${k === 'del' ? 'Delete' : k}">${k === 'del' ? icon.del : k}</button>`).join('')}</div>`;
+
+/* timers, toasts, confetti */
+const T = { ids: [], later(f, ms) { this.ids.push(setTimeout(f, ms)); }, every(f, ms) { const id = setInterval(f, ms); this.ids.push(id); return id; }, clear() { this.ids.forEach((i) => { clearTimeout(i); clearInterval(i); }); this.ids = []; } };
+const layer = $('#layer');
+function toast(msg, kind = '', html = false) {
+  $$('.toast', layer).forEach((t) => t.remove());
+  const t = document.createElement('div');
+  t.className = 'toast ' + kind; t.setAttribute('role', 'status');
+  if (html) t.innerHTML = msg; else t.textContent = msg;
+  layer.appendChild(t);
+  setTimeout(() => t.classList.add('out'), 2600); setTimeout(() => t.remove(), 3000);
+}
+function confetti(n = 46) {
+  if (reduce) return;
+  const cols = ['#2E4BDB', '#1E7A4C', '#F2B33D', '#E25C4B', '#7C8CF8', '#15171C'];
+  for (let i = 0; i < n; i++) {
+    const p = document.createElement('i'); p.className = 'cf';
+    p.style.left = (15 + Math.random() * 70) + '%'; p.style.background = cols[i % cols.length];
+    p.style.setProperty('--dx', (Math.random() * 220 - 110) + 'px'); p.style.setProperty('--r', (Math.random() * 900 - 450) + 'deg');
+    p.style.animationDelay = (Math.random() * .25) + 's';
+    if (i % 3 === 0) { p.style.width = '10px'; p.style.height = '10px'; p.style.borderRadius = '50%'; }
+    layer.appendChild(p); setTimeout(() => p.remove(), 2400);
+  }
+}
+function countUp(el, to, fmt, ms = 800, from = 0) {
+  if (!el) return;
+  if (reduce) { el.textContent = fmt(to); return; }
+  const t0 = performance.now();
+  const f = (now) => { const p = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - p, 3); el.textContent = fmt(from + (to - from) * e); if (p < 1) requestAnimationFrame(f); };
+  requestAnimationFrame(f);
+}
+function qr(seed, anim = false) {
+  let x = (seed % 2147483646) + 1; const rnd = () => (x = x * 16807 % 2147483647) / 2147483647;
+  const n = 25; let r = '';
+  const inF = (i, j) => (i < 8 && j < 8) || (i < 8 && j > 16) || (i > 16 && j < 8);
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) if (!inF(i, j) && rnd() > .52) r += `<rect x="${j}" y="${i}" width="1" height="1"${anim ? ` style="--d:${i + j}"` : ''}/>`;
+  for (const [fx, fy] of [[0, 0], [18, 0], [0, 18]]) r += `<rect x="${fx}" y="${fy}" width="7" height="7" rx="1.2"/><rect x="${fx + 1}" y="${fy + 1}" width="5" height="5" rx=".8" fill="#fff"/><rect x="${fx + 2}" y="${fy + 2}" width="3" height="3" rx=".6"/>`;
+  return `<svg viewBox="0 0 25 25" width="100%" height="100%" shape-rendering="crispEdges" fill="#15171C" class="${anim ? 'qra' : ''}" role="img" aria-label="Sample QR code">${r}</svg>`;
+}
 
 /* ---------- Concept 1: Send without picking a network ---------- */
-const nets = { auto: { name: 'Auto (TRON)', fee: 0.4, eta: '~1 min' }, ton: { name: 'TON', fee: 0.05, eta: '~10 sec' }, eth: { name: 'Ethereum', fee: 1.8, eta: '~2 min' } };
+const nets = { tron: { name: 'TRON', fee: 0.40, eta: '~1 min' }, ton: { name: 'TON', fee: 0.05, eta: '~10 sec' }, eth: { name: 'Ethereum', fee: 1.80, eta: '~2 min' } };
 const contacts = [
-  { id: 'rina', init: 'RP', name: 'Rina Putri', meta: "You've sent 4 times · last 2 weeks ago", badge: 'Verified' },
-  { id: 'budi', init: 'BS', name: 'Budi Santoso', meta: 'Sent once · last month', badge: 'Saved' }
+  { id: 'rina', init: 'RP', name: 'Rina Putri', meta: 'Sent 4 times · last 2 weeks ago', badge: 'Verified', acc: ['tron', 'ton'], col: '#E3E7FB' },
+  { id: 'budi', init: 'BS', name: 'Budi Santoso', meta: 'Sent once · last month', badge: 'Saved', acc: ['tron'], col: '#FDEBD3' },
+  { id: 'kopi', init: 'SK', name: 'Studio Kopi', meta: 'Client · paid you 3 times', badge: 'Client', acc: ['ton', 'eth'], col: '#DCEFE3' }
 ];
+const initialWallet = () => ({ bal: 1240.5, hist: [{ c: 'RP', n: 'Rina Putri', d: 'Sent · Oct 4', a: -120 }, { c: 'SK', n: 'Studio Kopi', d: 'Received · Oct 1', a: 850 }, { c: 'BS', n: 'Budi Santoso', d: 'Sent · Sep 22', a: -40 }] });
+let wallet = initialWallet();
+const popWrap = (str, n) => n ? str.slice(0, -n) + `<span class="pop">${str.slice(-n)}</span>` : str;
+const fmtTyped = (a) => { const [i, d] = a.split('.'); return '$' + (+i).toLocaleString('en-US') + (d !== undefined ? '.' + d : ''); };
 const send = {
-  s: { step: 'home', to: null, amt: '50', net: 'auto', manual: false },
-  reset() { this.s = { step: 'home', to: null, amt: '50', net: 'auto', manual: false }; },
+  labels: { home: 'Home', to: 'Pick a person', amount: 'Amount', review: 'Review', sending: 'Sending', done: 'Arrived' },
+  notes: {
+    home: 'Balance in dollars first, token second. People think in money, not in USDT. The people you pay most sit right under the balance, because most transfers go to someone you have paid before.',
+    to: 'You pick a person, not a chain. A new pasted address is the risky path, so it goes through the look-alike check from concept 2 before you can send.',
+    amount: 'A real keypad, amounts in dollars, and "Max" leaves room for the fee so the transfer never fails at the last step.',
+    review: 'The wallet picks the cheapest network the recipient can actually receive on. You can still change it, but networks they can\'t use are blocked with a plain reason. Sending needs a press and hold, so it never happens by accident.',
+    sending: 'Three plain-language steps instead of a transaction hash. Most anxiety happens in this gap, so it shows progress the whole time.',
+    done: 'A clear "Arrived" moment, then the balance and activity update right away, so people trust what they see.'
+  },
+  s: {},
+  reset() { wallet = initialWallet(); this.s = { step: 'home', to: null, amt: '50', net: 'auto', sheet: null, q: '', hide: false, applied: false, shake: null }; },
+  route() { const s = this.s; if (s.net !== 'auto') return { k: s.net, ...nets[s.net] }; const k = s.to.acc.slice().sort((a, b) => nets[a].fee - nets[b].fee)[0]; return { k, ...nets[k] }; },
+  start(c) { const s = this.s; s.to = c; s.amt = '50'; s.net = 'auto'; s.applied = false; s.step = 'amount'; },
   render() {
-    const s = this.s, amt = parseFloat(s.amt) || 0, net = nets[s.net], bal = 1240.5, over = amt + net.fee > bal;
-    if (s.step === 'home') return `<div class="screen">
-      <div class="row" style="justify-content:space-between"><div class="row"><div class="avatar" style="width:36px;height:36px">AE</div><b>My wallet</b></div><span class="small muted" style="background:#fff;border:1px solid var(--line);padding:6px 10px;border-radius:20px">Self-custodial</span></div>
-      <div style="background:var(--ink);color:#fff;border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:6px">
-        <span class="small" style="color:#C9CCD3">USDT balance</span>
-        <span style="font-size:40px;font-weight:800;letter-spacing:-1px">${money(bal)}</span>
-        <span class="small" style="color:#C9CCD3">1,240.50 USDT · 1 USDT ≈ $1.00</span>
-        <div class="row" style="margin-top:16px;gap:10px"><button data-go="to" style="flex:1;height:48px;border-radius:14px;border:0;background:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px">${icon.send} Send</button><button style="flex:1;height:48px;border-radius:14px;border:1px solid #3A3D46;background:transparent;color:#fff;font-weight:600;font-size:15px">Receive</button></div>
+    const s = this.s, w = wallet;
+    if (s.step === 'home') {
+      const fb = s.flipBal; s.flipBal = false;
+      const html = `<div class="screen">
+      <div class="row" style="justify-content:space-between"><div class="row" style="gap:10px"><div class="avatar sm" style="background:var(--ink);color:#fff">AE</div><div><div class="tiny muted">Hi, Angga</div><b>My wallet</b></div></div><span class="pill">${icon.lock} Self-custodial</span></div>
+      <div class="bal">
+        <div class="row" style="justify-content:space-between;position:relative;z-index:1"><span class="small" style="color:#C9CCD3">USDT balance</span><button class="eye" data-act="hide" aria-label="${s.hide ? 'Show' : 'Hide'} balance">${s.hide ? icon.eyeOff : icon.eye}</button></div>
+        <span class="big${fb ? ' swapv' : ''}">${s.hide ? '$ • • • • •' : money(s.animBal != null ? s.animBal : w.bal)}</span>
+        <span class="small" style="color:#C9CCD3">${s.hide ? 'Hidden. Tap the eye to show' : usdtF(w.bal) + ' USDT · 1 USDT ≈ $1.00'}</span>
+        <div class="acts">${[['to', 'Send', icon.send], ['recv', 'Receive', icon.recv], ['req', 'Request', icon.plus], ['scan', 'Scan', icon.scan]].map(([k, l, ic]) => `<button class="act" data-act="${k}"><span>${ic}</span>${l}</button>`).join('')}</div>
       </div>
-      <div>${[['RP','Rina Putri','Sent · Oct 4','−$120.00'],['CL','Client payment','Received · Oct 1','+$850.00'],['BS','Budi Santoso','Sent · Sep 22','−$40.00']].map(r=>`<div class="row" style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="avatar" style="width:40px;height:40px;background:#fff;border:1px solid var(--line);color:var(--ink)">${r[0]}</div><div style="flex:1"><b style="font-size:15px">${r[1]}</b><div class="small muted">${r[2]}</div></div><b style="color:${r[3][0]==='+'?'var(--ok)':'var(--ink)'}">${r[3]}</b></div>`).join('')}</div>
+      <div><div class="sec">Send again</div><div class="quick">${contacts.map((c) => `<button class="q" data-quick="${c.id}"><div class="avatar" style="background:${c.col}">${c.init}</div><span>${c.name.split(' ')[0]}</span></button>`).join('')}</div></div>
+      <div><div class="sec">Activity</div>${w.hist.slice(0, 4).map((h) => `<div class="tx${h.fresh ? ' fresh' : ''}"><div class="avatar">${h.c}</div><div style="flex:1"><b style="font-size:15px">${h.n}</b><div class="small muted">${h.d}</div></div><b style="color:${h.a > 0 ? 'var(--ok)' : 'var(--ink)'}">${h.a > 0 ? '+' : '−'}${money(Math.abs(h.a))}</b></div>`).join('')}</div>
       <div class="foot">Concept by Angga Ady Ermawan</div></div>`;
-    if (s.step === 'to') return `<div class="screen">
-      <div class="row">${backBtn('home')}<h2 class="h">Send to</h2></div>
-      <p class="muted" style="margin:0;line-height:1.5;font-size:14px">Pick someone you've paid before. No network to choose, no long address to copy.</p>
-      <div style="display:flex;flex-direction:column;gap:10px">${contacts.map(c=>`<button class="pick" data-contact="${c.id}"><div class="avatar">${c.init}</div><div style="flex:1"><b style="font-size:15px">${c.name}</b><div class="small muted" style="font-size:12px">${c.meta}</div></div><span class="badge">${c.badge}</span></button>`).join('')}</div>
-      <button class="pick" data-contact="new" style="border-style:dashed;background:transparent"><div class="avatar" style="background:#fff;border:1px solid var(--line);color:var(--ink)">+</div><div><b style="font-size:15px">Paste a new address</b><div class="small muted" style="font-size:12px">We'll check it before you send</div></div></button></div>`;
-    if (s.step === 'amount') return `<div class="screen">
-      <div class="row">${backBtn('to')}<div><div class="small muted">Sending to</div><b style="font-size:17px">${s.to.name}</b></div></div>
-      ${s.to.id==='new'?`<div style="background:#FFF4E0;border:1px solid #F0CF94;border-radius:16px;padding:12px 14px;font-size:13px;line-height:1.5;color:#5A3B00"><b>New address.</b> Check the first and last 4 characters with the person: <b>TQ7v</b>…<b>9aZk</b>.</div>`:''}
-      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:28px 0 8px"><label for="amt" class="small muted">Amount in dollars</label><div class="row" style="gap:4px;align-items:baseline"><span style="font-size:44px;font-weight:800">$</span><input id="amt" class="amount" type="number" inputmode="decimal" min="0" value="${s.amt}"></div><div class="small" id="bal" style="color:${over?'#B3261E':'var(--muted)'}">${over?'Not enough balance for this amount plus fee':'Available '+money(bal)}</div></div>
-      <div class="grid4">${[10,50,100,250].map(v=>`<button class="chip${+s.amt===v?' on':''}" data-amt="${v}">$${v}</button>`).join('')}</div>
-      <button class="cta blue" data-go="review" ${amt<=0||over?'disabled':''}>Continue</button></div>`;
-    if (s.step === 'review') return `<div class="screen">
-      <div class="row">${backBtn('amount')}<h2 class="h">Review</h2></div>
-      <div class="card" style="display:flex;flex-direction:column;gap:14px">
-        <div style="text-align:center;padding-bottom:12px;border-bottom:1px solid #EEECE6"><div class="small muted">${s.to.name} gets</div><div style="font-size:36px;font-weight:800;letter-spacing:-1px">${money(amt)}</div><div class="muted" style="font-size:12px">${amt.toFixed(2)} USDT, exactly</div></div>
-        <div class="kv"><span class="muted">Network fee</span><b>${money(net.fee)}</b></div>
-        <div class="kv"><span class="muted">Arrives in</span><b>${net.eta}</b></div>
-        <div class="kv" style="padding-top:12px;border-top:1px solid #EEECE6;font-size:15px"><b>You pay</b><b>${money(amt+net.fee)}</b></div>
+      w.hist.forEach((h) => (h.fresh = false));
+      return html;
+    }
+    if (s.step === 'to') return `<div class="screen">${hdr('home', 'Send to')}
+      <label class="search">${icon.search}<input id="q" type="search" placeholder="Search a name" value="${esc(s.q)}" aria-label="Search contacts" autocomplete="off"></label>
+      <div><div class="sec">People you've paid</div><div class="list">${contacts.map((c) => `<button class="pick" data-contact="${c.id}" data-name="${c.name.toLowerCase()}"><div class="avatar" style="background:${c.col}">${c.init}</div><div style="flex:1"><b style="font-size:15px">${c.name}</b><div class="tiny muted">${c.meta}</div></div><span class="badge">${c.badge}</span></button>`).join('')}<div class="small muted" id="none" style="display:none;padding:8px 2px">No saved contact with that name.</div></div></div>
+      <button class="pick dashed" data-act="paste"><div class="avatar" style="background:#fff;border:1px dashed #B9BDC6;color:var(--ink)">${icon.plus}</div><div><b style="font-size:15px">Paste a new address</b><div class="tiny muted">We check it before you can send</div></div></button></div>`;
+    const r = this.route(), amt = parseFloat(s.amt) || 0, first = s.to.name.split(' ')[0];
+    if (s.step === 'amount') {
+      const over = amt + r.fee > w.bal, sh = s.shake, pp = s.pop || 0; s.shake = null; s.pop = 0;
+      return `<div class="screen" style="gap:12px">${hdr('to', s.to.name, 'Sending to')}
+      <div class="amtbox"><div class="amtv${over ? ' bad' : ''}${sh === 'amt' ? ' shake' : ''}" id="amtv">${popWrap(fmtTyped(s.amt), pp)}<i class="caret"></i></div><div class="small ${over ? 'err' : 'muted'}">${over ? 'Not enough for this amount plus the ' + money(r.fee) + ' fee' : '≈ ' + usdtF(amt) + ' USDT · Available ' + money(w.bal)}</div></div>
+      <div class="grid4">${[10, 50, 100].map((v) => `<button class="chip${+s.amt === v ? ' on' : ''}" data-amt="${v}">$${v}</button>`).join('')}<button class="chip" data-amt="max">Max</button></div>
+      ${keypad()}
+      <button class="cta blue" data-go="review" ${amt <= 0 || over ? 'disabled' : ''}>Continue</button></div>`;
+    }
+    if (s.step === 'review') {
+      const auto = s.net === 'auto', sh = s.shake; s.shake = null;
+      const best = this.s.to.acc.slice().sort((a, b) => nets[a].fee - nets[b].fee)[0];
+      const rows = [['auto', { name: 'Auto (recommended)', fee: nets[best].fee, eta: 'Picks ' + nets[best].name + ' for ' + first }], ...Object.entries(nets)].map(([k, n]) => {
+        const ok = k === 'auto' || s.to.acc.includes(k);
+        return `<button class="netrow${s.net === k ? ' on' : ''}${ok ? '' : ' no'}${sh === k ? ' shake' : ''}" data-net="${k}"><div><b>${n.name}</b><div class="tiny ${ok ? 'muted' : 'err'}">${ok ? n.eta : first + '\'s wallet can\'t receive here'}</div></div><span style="font-weight:700">${money(n.fee)}</span></button>`;
+      }).join('');
+      return `<div class="screen">${hdr('amount', 'Review')}
+      <div class="card col">
+        <div class="row"><div class="avatar" style="background:${s.to.col}">${s.to.init}</div><div style="flex:1"><b>${s.to.name}</b><div class="tiny muted">${s.to.badge} contact · accepts ${s.to.acc.map((k) => nets[k].name).join(', ')}</div></div></div>
+        <div style="text-align:center;padding:4px 0 12px;border-bottom:1px solid #EEECE6"><div class="small muted">${first} gets</div><div style="font-size:38px;font-weight:800;letter-spacing:-1px">${money(amt)}</div><div class="tiny muted">${usdtF(amt)} USDT, exactly</div></div>
+        <div class="kv"><span class="muted">Network fee</span><b>${money(r.fee)}</b></div>
+        <div class="kv"><span class="muted">Arrives in</span><b>${r.eta}</b></div>
+        <div class="kv total"><b>You pay</b><b>${money(amt + r.fee)}</b></div>
       </div>
-      <div class="route"><b style="color:var(--accent-d);font-size:14px">${s.net==='auto'?'Best route picked for you':'You chose '+net.name}</b><span style="font-size:13px;color:#2B3570;line-height:1.5">${s.net==='auto'?'Cheapest safe network for this transfer, and one '+s.to.name.split(' ')[0]+"'s wallet already accepts. Nothing to choose.":'Make sure the recipient can receive USDT on '+net.name+'.'}</span>
-        <button class="link" data-toggle="manual">${s.manual?'Hide network options':'Choose network yourself'}</button>
-        ${s.manual?`<div style="display:flex;flex-direction:column;gap:8px">${Object.entries(nets).map(([k,n])=>`<button data-net="${k}" style="display:flex;justify-content:space-between;align-items:center;min-height:44px;padding:0 14px;border-radius:12px;border:${s.net===k?'2px solid var(--accent)':'1px solid var(--line)'};background:#fff;font-size:14px"><b>${n.name}</b><span class="muted">${money(n.fee)} · ${n.eta}</span></button>`).join('')}<span style="font-size:11px;color:#4A5170">Example fees for this concept.</span></div>`:''}
-      </div>
-      <button class="cta" data-go="sending">Send ${money(amt)}</button></div>`;
-    if (s.step === 'sending') return `<div class="screen center" style="justify-content:center"><div style="width:72px;height:72px;border-radius:36px;border:5px solid var(--line);border-top-color:var(--accent);animation:spin .9s linear infinite"></div><h2 class="h">Sending ${money(amt)} to ${s.to.name}</h2><p class="muted" style="margin:0;max-width:260px;line-height:1.5;font-size:14px">You can close the app. We'll tell you both the moment it arrives.</p></div>`;
-    return `<div class="screen" style="padding-top:96px">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center"><div class="okc">${icon.check}</div><div style="font-size:26px;font-weight:800">Arrived</div><p style="margin:0;color:#3D424C;line-height:1.5">${s.to.name} received <b>${money(amt)}</b>. They've been notified.</p></div>
-      <div class="card" style="display:flex;flex-direction:column;gap:14px">${[['Sent from your wallet','now'],['Confirmed on the network','+40s'],['Arrived in '+s.to.name+"'s wallet",'+1 min']].map(x=>`<div class="row"><span class="badge" style="padding:4px 7px">✓</span><b style="flex:1;font-size:14px;font-weight:600">${x[0]}</b><span class="muted" style="font-size:12px">${x[1]}</span></div>`).join('')}</div>
-      <p class="small muted" style="text-align:center;margin:0">Paid ${money(net.fee)} network fee · Receipt saved</p>
-      <button class="cta" data-reset>Done</button></div>`;
+      <div class="route"><div class="row" style="justify-content:space-between"><b>${auto ? 'Best route: ' + r.name : 'You chose ' + r.name}</b><button class="link" data-act="sheetnet">Change</button></div><span>${auto ? 'Cheapest network ' + first + '\'s wallet accepts. Nothing to choose.' : first + '\'s wallet accepts ' + r.name + '. Switch back to Auto anytime.'}</span></div>
+      ${holdBtn('send', 'Hold to send ' + money(amt))}
+      <div class="hint">Press and hold, so nothing gets sent by accident</div></div>
+      ${s.sheet === 'net' ? sheet('net', 'Choose network', `<p class="small muted">Fees are shown in dollars. Networks ${first} can't receive on are blocked.</p><div class="list">${rows}</div><button class="ghost" data-close>Close</button>`) : ''}`;
+    }
+    if (s.step === 'sending') return `<div class="screen center" style="justify-content:center;gap:20px"><div class="xfer"><div class="avatar" style="background:var(--ink);color:#fff;width:52px;height:52px">AE</div><div class="track"><span class="coin">$</span></div><div class="avatar dest" style="background:${s.to.col};width:52px;height:52px">${s.to.init}</div></div><h2 class="h">Sending ${money(amt)} to ${first}</h2>
+      <div class="card tl">${['Leaving your wallet', 'Confirmed on ' + r.name, 'Arriving in ' + first + '\'s wallet'].map((t) => `<div class="tlr"><span class="dot"></span><span>${t}</span></div>`).join('')}</div>
+      <p class="small muted" style="max-width:270px">You can close the app. We'll tell you both the moment it arrives.</p></div>`;
+    return `<div class="screen center" style="padding-top:84px"><div class="okc">${icon.check}</div><div class="h1">Arrived</div><p style="color:var(--ink2)">${first} received <b id="arr">${money(amt)}</b>. They've been notified.</p>
+      <div class="card tl">${[['Left your wallet', 'now'], ['Confirmed on ' + r.name, '+8s'], ['Arrived in ' + first + '\'s wallet', r.eta.replace('~', '')]].map((x) => `<div class="tlr ok"><span class="dot"></span><span>${x[0]}</span><span class="t">${x[1]}</span></div>`).join('')}</div>
+      <p class="tiny muted">Paid ${money(r.fee)} fee on ${r.name} · Receipt saved</p>
+      <button class="cta" data-act="finish">Back to wallet</button></div>`;
+  },
+  enter(step) {
+    const s = this.s;
+    if (step === 'sending') {
+      const rows = $$('.tlr');
+      [300, 1100, 1900].forEach((ms, i) => T.later(() => { rows[i] && rows[i].classList.add('ok'); vib(6); }, ms));
+      T.later(() => { if (cur === send && s.step === 'sending') { s.step = 'done'; draw(); } }, 2500);
+    }
+    if (step === 'done') {
+      const amt = parseFloat(s.amt), r = this.route();
+      if (!s.applied) { s.animBal = wallet.bal; wallet.bal = Math.round((wallet.bal - amt - r.fee) * 100) / 100; wallet.hist.unshift({ c: s.to.init, n: s.to.name, d: 'Sent · Just now', a: -amt, fresh: true }); s.applied = true; }
+      countUp($('#arr'), amt, money); confetti(); vib([12, 60, 12]);
+    }
+  },
+  key(k) {
+    const s = this.s; let a = s.amt;
+    if (k === 'del') a = a.length > 1 ? a.slice(0, -1) : '0';
+    else if (k === '.') { if (!a.includes('.')) a += '.'; }
+    else { if (a === '0') a = k; else { if (a.includes('.') && a.split('.')[1].length >= 2) { s.shake = 'amt'; return; } if (a.replace('.', '').length >= 6) { s.shake = 'amt'; return; } a += k; } }
+    s.amt = a; s.pop = k === 'del' || k === '.' ? 0 : 1;
+    if ((parseFloat(a) || 0) + this.route().fee > wallet.bal) s.shake = 'amt';
   },
   click(t) {
-    const s = this.s;
-    if (t.dataset.go) { s.step = t.dataset.go; if (s.step === 'sending') setTimeout(() => { if (cur === send && s.step === 'sending') { s.step = 'done'; draw(); } }, 2200); return true; }
-    if (t.dataset.contact) { const c = contacts.find(c => c.id === t.dataset.contact) || { id: 'new', init: 'TQ', name: 'TQ7v…9aZk' }; s.to = c; s.step = 'amount'; return true; }
-    if (t.dataset.amt) { s.amt = t.dataset.amt; return true; }
-    if (t.dataset.toggle) { s.manual = !s.manual; return true; }
-    if (t.dataset.net) { s.net = t.dataset.net; return true; }
-    if ('reset' in t.dataset) { this.reset(); return true; }
+    const s = this.s, d = t.dataset;
+    if (d.key) { this.key(d.key); return true; }
+    if (d.go) { if (d.go === 'to') s.q = ''; s.step = d.go; s.sheet = null; return true; }
+    if (d.quick) { this.start(contacts.find((c) => c.id === d.quick)); return true; }
+    if (d.contact) { this.start(contacts.find((c) => c.id === d.contact)); return true; }
+    if (d.amt) { if (d.amt === 'max') { s.amt = (Math.floor((wallet.bal - this.route().fee) * 100) / 100).toFixed(2); } else s.amt = d.amt; return true; }
+    if ('close' in d) { s.sheet = null; return true; }
+    if (d.net) {
+      const ok = d.net === 'auto' || s.to.acc.includes(d.net);
+      if (!ok) { s.shake = d.net; vib([20, 40, 20]); toast(s.to.name.split(' ')[0] + '\'s wallet can\'t receive on ' + nets[d.net].name + '. Money sent there could be lost.', 'bad'); return true; }
+      s.net = d.net; s.sheet = null; toast(d.net === 'auto' ? 'Back to the best route' : 'Network set to ' + nets[d.net].name); return true;
+    }
+    const a = d.act;
+    if (a === 'hide') { s.hide = !s.hide; s.flipBal = true; return true; }
+    if (a === 'to') { s.q = ''; s.step = 'to'; return true; }
+    if (a === 'recv' || a === 'req') { switchTo(2); toast('Receiving works through a payment link. This is concept 3.'); return false; }
+    if (a === 'scan') { switchTo(4); return false; }
+    if (a === 'sheetnet') { s.sheet = 'net'; return true; }
+    if (a === 'paste') { look.reset(); look.s.from = 'send'; switchTo(1, true); return false; }
+    if (a === 'finish') { s.step = 'home'; T.later(() => toast('Balance and activity updated', 'ok'), 450); return true; }
   },
-  input(e) { if (e.target.id === 'amt') { this.s.amt = e.target.value; const amt = parseFloat(this.s.amt) || 0, over = amt + nets[this.s.net].fee > 1240.5; const b = $('#bal'); b.textContent = over ? 'Not enough balance for this amount plus fee' : 'Available ' + money(1240.5); b.style.color = over ? '#B3261E' : 'var(--muted)'; document.querySelector('[data-go="review"]').disabled = amt <= 0 || over; document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', +c.dataset.amt === +this.s.amt)); } }
+  after() { const s = this.s; if (s.step === 'home' && s.animBal != null) { const from = s.animBal; s.animBal = null; if (!s.hide) T.later(() => countUp($('.bal .big'), wallet.bal, money, 1100, from), 350); } },
+  hold(name) { if (name === 'send') { this.s.step = 'sending'; return true; } },
+  input(e) {
+    if (e.target.id !== 'q') return;
+    const q = (this.s.q = e.target.value).toLowerCase().trim(); let n = 0;
+    $$('.pick[data-name]').forEach((b) => { const m = b.dataset.name.includes(q); b.style.display = m ? '' : 'none'; n += m; });
+    $('#none').style.display = n ? 'none' : '';
+  }
 };
 
 /* ---------- Concept 2: Look-alike address check ---------- */
+const POISON = 'TQ7vXm3RkPq8LwYz2NcHf5Ud9aZk', SAVED = 'TQ7vBf8NhJ2sTeA6oKrV1GcW9aZk';
 const look = {
-  s: { step: 'warn', confirm: false },
-  reset() { this.s = { step: 'warn', confirm: false }; },
+  labels: { paste: 'Paste address', scan: 'Checking', warn: 'Warning', held: 'On hold', cancelled: 'Cancelled', safe: 'Switched' },
+  notes: {
+    paste: 'Address poisoning works because people copy addresses from their own history. Every pasted address gets checked before the amount screen, without the person asking for it.',
+    scan: 'The check compares against saved contacts and recent transfers. It takes about a second and needs no action, so it doesn\'t slow down normal payments.',
+    warn: 'Show the difference, don\'t just say "risky". The middle of the address is highlighted because that\'s the part people never read. The safe choice is the big button.',
+    held: 'If someone still continues, a 10-minute hold gives them time to cancel if they were pressured. Scams rely on urgency, so time is the defence.',
+    cancelled: 'Cancelling is one tap and the money never left. The safe exit should always be easier than the risky one.',
+    safe: 'Switching takes one tap and the look-alike address is blocked for next time. Then the person goes straight back to sending.'
+  },
+  s: {},
+  reset() { this.s = { step: 'paste', typed: false, chars: false, ack: false, sheet: null, left: 600, from: null, busy: false }; },
+  paste() {
+    const s = this.s; if (s.typed || s.busy) return; s.busy = true;
+    const el = $('#addr'), btn = $('[data-act="paste"]'); if (btn) btn.disabled = true;
+    $('.addrbox') && $('.addrbox').classList.add('filled');
+    let i = 0; el.textContent = '';
+    T.every(() => { if (i < POISON.length) { el.textContent += POISON[i++]; } }, 22);
+    T.later(() => { s.typed = true; s.busy = false; s.step = 'scan'; draw(); }, POISON.length * 22 + 500);
+  },
   render() {
     const s = this.s;
-    if (s.step === 'warn') return `<div class="screen">
+    if (s.step === 'paste') return `<div class="screen">${hdr(null, 'Send to')}
+      <div class="addrbox"><span class="tiny muted">Address or name</span><div class="mono" id="addr"><span class="ph">Paste or type an address</span></div></div>
+      <button class="cta blue" style="margin-top:0" data-act="paste">${icon.copy} Paste from clipboard</button>
+      <div><div class="sec">Recent</div><div class="card col" style="padding:6px 16px;gap:0">${[['RP', 'Rina Putri', 'TQ7v…9aZk · 2 weeks ago', '#E3E7FB'], ['BS', 'Budi Santoso', 'TJx2…Q4mp · last month', '#FDEBD3']].map((r, i) => `<div class="row" style="padding:12px 0;${i ? 'border-top:1px solid #EEECE6' : ''}"><div class="avatar sm" style="background:${r[3]}">${r[0]}</div><div><b style="font-size:14px">${r[1]}</b><div class="tiny muted">${r[2]}</div></div></div>`).join('')}</div></div>
+      <div class="tip">${icon.shieldS}<span>Every pasted address is compared with your contacts and recent transfers before you can send.</span></div></div>`;
+    if (s.step === 'scan') return `<div class="screen center" style="justify-content:center;gap:22px"><div class="radar">${icon.shieldW}</div><h2 class="h">Checking this address</h2><div class="mono scanchars" aria-label="Pasted address">${[...POISON].map((c, i) => `<span style="--i:${i}">${c}</span>`).join('')}</div>
+      <div class="card tl">${['Compared with your 12 saved contacts', 'Checked your last 50 transfers', 'Looked up reported scam addresses'].map((t) => `<div class="tlr"><span class="dot"></span><span>${t}</span></div>`).join('')}</div></div>`;
+    if (s.step === 'warn') {
+      const diffN = [...POISON].filter((c, i) => c !== SAVED[i]).length;
+      const view = s.chars
+        ? `<div><div class="tiny muted" style="font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px">You pasted</div><div class="cgrid">${[...POISON].map((c, i) => `<span class="${c === SAVED[i] ? '' : 'x'}" style="--i:${i}">${c}</span>`).join('')}</div></div>
+           <div><div class="tiny muted" style="font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px">Rina's saved address</div><div class="cgrid saved">${[...SAVED].map((c, i) => `<span class="${c === POISON[i] ? '' : 'x'}" style="--i:${i + 10}">${c}</span>`).join('')}</div></div>
+           <div class="small" style="color:var(--bad-d);font-weight:700">${diffN} of ${POISON.length} characters are different</div>`
+        : `<div><div class="tiny muted" style="font-weight:700;text-transform:uppercase;letter-spacing:.6px">You pasted</div><div class="mono"><b>TQ7v</b><span class="diff">${POISON.slice(4, -4)}</span><b>9aZk</b></div></div>
+           <div style="height:1px;background:#EEECE6"></div>
+           <div><div class="tiny muted" style="font-weight:700;text-transform:uppercase;letter-spacing:.6px">Rina Putri · saved, paid 4 times</div><div class="mono"><b>TQ7v</b><span class="same">${SAVED.slice(4, -4)}</span><b>9aZk</b></div></div>
+           <div class="small" style="color:var(--ink2)">Same first 4 and last 4 characters. The middle is completely different.</div>`;
+      return `<div class="screen">
       <div class="small muted">Send to · pasted address</div>
-      <div class="warn"><div class="row" style="color:var(--bad)">${icon.warn}<b style="font-size:18px">This looks like Rina's address, but it isn't</b></div><p style="margin:10px 0 0;font-size:14px;line-height:1.55;color:#5A1A15">Scammers create addresses that start and end the same as someone you pay, hoping you copy the wrong one from your history.</p></div>
-      <div class="card" style="display:flex;flex-direction:column;gap:14px">
-        <div><div class="small muted" style="font-weight:700;text-transform:uppercase;letter-spacing:.6px;font-size:12px">You pasted</div><div class="mono"><b>TQ7v</b><span class="diff">Xm3RkPq8LwYz2NcHf5Ud</span><b>9aZk</b></div></div>
-        <div style="height:1px;background:#EEECE6"></div>
-        <div><div class="small muted" style="font-weight:700;text-transform:uppercase;letter-spacing:.6px;font-size:12px">Rina Putri · saved, paid 4 times</div><div class="mono"><b>TQ7v</b><span class="same">Bf8NhJ2sTeA6oKrV1GcW</span><b>9aZk</b></div></div>
-        <div class="small" style="color:#3D424C">Same first 4 and last 4 characters. The middle is completely different.</div>
-      </div>
+      <div class="warn"><div class="row" style="color:var(--bad-d)">${icon.warn}<b style="font-size:18px;line-height:1.3">This looks like Rina's address, but it isn't</b></div><p style="margin-top:10px;font-size:14px;color:#5A1A15">Scammers create addresses that start and end like someone you pay, hoping you copy the wrong one from your history.</p></div>
+      <div class="card col">${view}<button class="link" style="align-self:flex-start" data-act="chars">${s.chars ? 'Show full addresses' : 'Compare every character'}</button></div>
       <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
-        <button class="cta" style="margin-top:0" data-go="safe">Send to Rina's saved address</button>
-        <button class="ghost" data-toggle="confirm">${s.confirm?'I confirmed with Rina directly, continue':'This is a new address from Rina'}</button>
-        ${s.confirm?'<div class="small" style="line-height:1.5;color:#3D424C;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px">Only continue if Rina told you this new address herself, by call or in person. We\'ll hold the transfer for 10 minutes so you can cancel.</div>':''}
-      </div></div>`;
-    return `<div class="screen center" style="padding-top:96px"><div class="okc">${icon.shield}</div><div style="font-size:24px;font-weight:800">Switched to the saved address</div><p style="margin:0;color:#3D424C;line-height:1.55;max-width:300px">The look-alike address is now blocked for you, and it won't appear in your history.</p><button class="cta" style="align-self:stretch" data-reset>Continue to amount</button></div>`;
+        <button class="cta" style="margin-top:0" data-go="safe">${icon.shieldS} Send to Rina's saved address</button>
+        <button class="ghost" data-act="newaddr">This is a new address from Rina</button>
+      </div></div>
+      ${s.sheet === 'confirm' ? sheet('confirm', 'Before you continue', `<p class="small" style="color:var(--ink2)">Scammers often pretend to be friends or support staff and send a "new" address. Only continue if this is true:</p>
+        <button class="checkbtn${s.ack ? ' on' : ''}" role="checkbox" aria-checked="${s.ack}" data-act="ack"><span class="box"></span><span>Rina gave me this new address herself, by phone or in person</span></button>
+        ${holdBtn('newaddr', 'Hold to continue', !s.ack, 'red')}
+        <button class="ghost" data-close>Go back</button>`) : ''}`;
+    }
+    if (s.step === 'held') return `<div class="screen center" style="padding-top:76px">
+      <div class="ringw"><svg viewBox="0 0 120 120" width="168" height="168" aria-hidden="true"><circle cx="60" cy="60" r="52" fill="none" stroke="#E4E2DC" stroke-width="8"/><circle id="ring" cx="60" cy="60" r="52" fill="none" style="stroke:var(--accent);transition:stroke-dashoffset 1s linear" stroke-width="8" stroke-linecap="round" stroke-dasharray="326.73" stroke-dashoffset="${(326.73 * (1 - s.left / 600)).toFixed(2)}" transform="rotate(-90 60 60)"/></svg><div class="ringt"><span id="cd">${mmss(s.left)}</span><small>until it sends</small></div></div>
+      <div class="h1">Transfer on hold</div>
+      <p style="color:var(--ink2)">$50.00 goes to <b class="mono" style="font-size:14px">TQ7v…9aZk</b> when the timer ends.</p>
+      <div class="tip" style="text-align:left">${icon.shieldS}<span>First transfers to a look-alike address wait 10 minutes. If anyone is rushing you, that's a warning sign.</span></div>
+      <button class="cta red" data-go="cancelled">Cancel transfer</button></div>`;
+    if (s.step === 'cancelled') return `<div class="screen center" style="padding-top:96px"><div class="okc">${icon.shield}</div><div class="h1">Transfer cancelled</div><p style="color:var(--ink2);max-width:300px">Your $50.00 never left your wallet. We've marked this address as suspicious for you.</p><button class="cta" data-act="restart">Start again</button></div>`;
+    return `<div class="screen center" style="padding-top:96px"><div class="okc">${icon.shield}</div><div class="h1">Switched to Rina's saved address</div><p style="color:var(--ink2);max-width:300px">The look-alike address is now blocked for you, and it won't show up in your history.</p>
+      <div class="card row" style="text-align:left;width:100%"><div class="avatar" style="background:#E3E7FB">RP</div><div><b>Rina Putri</b><div class="mono tiny" style="color:#13502F">TQ7v…GcW9aZk · Verified</div></div></div>
+      <button class="cta" data-act="handoff">Continue to amount</button></div>`;
+  },
+  enter(step) {
+    const s = this.s;
+    if (step === 'paste' && s.from === 'send') T.later(() => this.paste(), 500);
+    if (step === 'scan') { const rows = $$('.tlr'); [350, 850, 1350].forEach((ms, i) => T.later(() => { rows[i] && rows[i].classList.add('ok'); }, ms)); T.later(() => { if (cur === look && s.step === 'scan') { s.step = 'warn'; draw(); vib([30, 50, 30]); } }, 2000); }
+    if (step === 'held') {
+      s.left = 600;
+      T.every(() => { if (s.step !== 'held') return; s.left = Math.max(0, s.left - 1); const cd = $('#cd'), ring = $('#ring'); if (cd) cd.textContent = mmss(s.left); if (ring) ring.style.strokeDashoffset = (326.73 * (1 - s.left / 600)).toFixed(2); }, 1000);
+    }
+    if (step === 'cancelled' || step === 'safe') vib(10);
   },
   click(t) {
-    if (t.dataset.go) { this.s.step = t.dataset.go; return true; }
-    if (t.dataset.toggle) { this.s.confirm = !this.s.confirm; return true; }
-    if ('reset' in t.dataset) { this.reset(); return true; }
-  }
+    const s = this.s, d = t.dataset, a = d.act;
+    if ('close' in d) { s.sheet = null; return true; }
+    if (d.go) { s.step = d.go; s.sheet = null; return true; }
+    if (a === 'paste') { this.paste(); return false; }
+    if (a === 'chars') { s.chars = !s.chars; return true; }
+    if (a === 'newaddr') { s.sheet = 'confirm'; s.ack = false; return true; }
+    if (a === 'ack') { s.ack = !s.ack; return true; }
+    if (a === 'restart') { T.clear(); this.reset(); return true; }
+    if (a === 'handoff') { send.reset(); send.start(contacts[0]); switchTo(0, true); toast('Back to sending, with Rina\'s saved address', 'ok'); return false; }
+  },
+  hold(name) { if (name === 'newaddr') { this.s.sheet = null; this.s.step = 'held'; return true; } }
 };
 
 /* ---------- Concept 3: Request in Rupiah ---------- */
 const RATE = 16000;
 const req = {
-  s: { step: 'enter', cur: 'IDR', idr: 750000 },
-  reset() { this.s = { step: 'enter', cur: 'IDR', idr: 750000 }; },
+  labels: { enter: 'Set amount', link: 'Payment link', waiting: 'Waiting', paid: 'Paid' },
+  notes: {
+    enter: 'Freelancers in Indonesia price their work in Rupiah. You ask in Rupiah, the payer sends USDT, and the rate is locked for 15 minutes so nobody gets surprised. Drag the slider or tap a preset.',
+    link: 'One link and one QR. The payer doesn\'t need to know which network to use, their wallet handles it. Copy and share give instant feedback.',
+    waiting: 'Waiting is a real state, so it gets its own screen with live progress instead of a blank page. The payment arrives as a notification.',
+    paid: 'The receipt shows what was asked and what arrived, in both currencies, plus the locked rate that was used.'
+  },
+  s: {},
+  reset() { this.s = { step: 'enter', cur: 'IDR', idr: 750000, note: 'Logo design, October', sheet: null, lock: 900, copied: false }; },
+  vals() { const s = this.s, usdt = s.idr / RATE; return { usdt, idrFmt: rp(s.idr), usdtFmt: usdtF(usdt), isIdr: s.cur === 'IDR' }; },
   render() {
-    const s = this.s, usdt = s.idr / RATE, idrFmt = 'Rp ' + s.idr.toLocaleString('id-ID'), usdtFmt = usdt.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), isIdr = s.cur === 'IDR';
-    if (s.step === 'enter') return `<div class="screen">
-      <h2 class="h">Request money</h2>
-      <div style="display:flex;gap:6px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:4px;align-self:flex-start">${['IDR','USD'].map(c=>`<button data-cur="${c}" style="min-height:44px;padding:0 16px;border-radius:10px;border:0;background:${s.cur===c?'var(--ink)':'transparent'};color:${s.cur===c?'#fff':'var(--ink)'};font-size:14px;font-weight:700">${c==='IDR'?'Rupiah':'Dollar'}</button>`).join('')}</div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:36px 0 12px"><div class="small muted">You'll receive</div><div style="font-size:46px;font-weight:800;letter-spacing:-1.5px">${isIdr?idrFmt:'$'+usdtFmt}</div><div class="muted" style="font-size:14px">${isIdr?'≈ '+usdtFmt+' USDT':'≈ '+idrFmt}</div></div>
-      <div class="grid3">${[250000,750000,1500000].map(v=>`<button class="chip${s.idr===v?' on':''}" data-idr="${v}">${isIdr?'Rp '+(v/1000).toLocaleString('id-ID')+'rb':'$'+(v/RATE).toFixed(2)}</button>`).join('')}</div>
-      <div style="display:flex;flex-direction:column;gap:6px"><label for="note" class="small muted">What's it for?</label><input id="note" type="text" value="Logo design, October" style="height:48px;border-radius:14px;border:1px solid var(--line);background:#fff;padding:0 14px;font:inherit;font-size:15px"></div>
-      <div class="muted" style="font-size:12px">Example rate: 1 USDT ≈ Rp 16.000, locked for 15 minutes.</div>
+    const s = this.s, { usdt, idrFmt, usdtFmt, isIdr } = this.vals();
+    if (s.step === 'enter') {
+      const fl = s.flip; s.flip = false;
+      const pct = ((s.idr - 50000) / (5000000 - 50000) * 100).toFixed(1);
+      return `<div class="screen">
+      <div class="row" style="justify-content:space-between"><h2 class="h">Request money</h2><div class="seg" role="group" aria-label="Currency">${['IDR', 'USD'].map((c) => `<button data-cur="${c}" class="${s.cur === c ? 'on' : ''}" aria-pressed="${s.cur === c}">${c === 'IDR' ? 'Rupiah' : 'Dollar'}</button>`).join('')}</div></div>
+      <div class="amtbox" style="padding-top:22px"><div class="small muted">You'll receive</div><div class="amtv${fl ? ' flipin' : ''}" id="main" style="font-size:44px">${isIdr ? idrFmt : '$' + usdtFmt}</div><div class="small muted" id="sub">${isIdr ? '≈ ' + usdtFmt + ' USDT' : '≈ ' + idrFmt}</div></div>
+      <input type="range" id="rng" min="50000" max="5000000" step="50000" value="${s.idr}" style="--p:${pct}%" aria-label="Amount in Rupiah">
+      <div class="grid3">${[250000, 750000, 1500000].map((v) => `<button class="chip${s.idr === v ? ' on' : ''}" data-idr="${v}">${isIdr ? 'Rp ' + (v / 1000).toLocaleString('id-ID') + 'rb' : '$' + (v / RATE).toFixed(2)}</button>`).join('')}</div>
+      <label class="field"><span class="small muted">What's it for?</span><input id="note" type="text" value="${esc(s.note)}" maxlength="40"></label>
+      <div class="ratel">${icon.lock}<span>1 USDT ≈ Rp 16.000 (example) · rate locked for <b id="lock">${mmss(s.lock)}</b></span></div>
       <button class="cta blue" data-go="link">Create payment link</button></div>`;
-    if (s.step === 'link') return `<div class="screen">
-      <h2 class="h">Your link is ready</h2>
-      <div class="card" style="display:flex;flex-direction:column;align-items:center;gap:12px;border-radius:24px;padding:22px"><div style="width:168px;height:168px;border-radius:16px;border:2px dashed #B9BDC6;display:flex;align-items:center;justify-content:center" class="small muted">[QR code]</div><div style="font-size:30px;font-weight:800">${idrFmt}</div><div class="muted" style="font-size:14px">Payer sends ${usdtFmt} USDT · Logo design, October</div><div class="row small" style="width:100%;background:var(--ground);border-radius:12px;padding:10px 12px;color:#3D424C"><span style="flex:1">pay.wallet/angga/7Kp2</span><b style="color:var(--accent)">Copy</b></div></div>
-      <p class="small" style="margin:0;text-align:center;line-height:1.5;color:#3D424C">The payer doesn't need to pick a network. Their wallet routes it, and you get exactly ${usdtFmt} USDT.</p>
-      <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px"><button class="cta" style="margin-top:0" data-go="paid">Share link</button><button class="ghost" data-go="enter">Edit request</button></div></div>`;
-    return `<div class="screen center" style="padding-top:96px"><div class="okc">${icon.check}</div><div style="font-size:24px;font-weight:800">Paid by Studio Kopi</div><p style="margin:0;color:#3D424C;line-height:1.55">You received <b>${usdtFmt} USDT</b> (≈ ${idrFmt}) for Logo design, October.</p><div class="muted" style="font-size:12px">Simulated payment for this concept</div><button class="cta" style="align-self:stretch" data-reset>Done</button></div>`;
+    }
+    if (s.step === 'link') return `<div class="screen">${hdr('enter', 'Your link is ready')}
+      <div class="card col qrcard"><div class="qr">${qr(s.idr, true)}</div><div style="font-size:30px;font-weight:800;letter-spacing:-.5px">${idrFmt}</div><div class="small muted">Payer sends ${usdtFmt} USDT · ${esc(s.note) || 'No note'}</div>
+        <div class="linkpill"><span>pay.wallet/angga/7Kp2</span><button class="mini${s.copied ? ' done' : ''}" data-act="copy">${s.copied ? 'Copied' : icon.copy + ' Copy'}</button></div></div>
+      <p class="small" style="text-align:center;color:var(--ink2)">The payer doesn't pick a network. Their wallet routes it, and you get exactly ${usdtFmt} USDT.</p>
+      <button class="cta" data-act="share">${icon.share} Share link</button></div>
+      ${s.sheet === 'share' ? sheet('share', 'Share payment link', `<div class="apps">${[['WhatsApp', '#1E7A4C', 'W'], ['Telegram', '#2E4BDB', 'T'], ['Email', '#5E6470', '@'], ['Messages', '#D68A00', 'M']].map(([n, c, l]) => `<button class="app" data-app="${n}"><i style="background:${c}">${l}</i>${n}</button>`).join('')}</div><div class="linkpill"><span>pay.wallet/angga/7Kp2 · ${idrFmt}</span></div><button class="ghost" data-close>Cancel</button>`) : ''}`;
+    if (s.step === 'waiting') return `<div class="screen center" style="justify-content:center;gap:20px"><div class="pulsew">${icon.clock}</div><h2 class="h">Waiting for payment</h2><p class="small muted">${idrFmt} · ${esc(s.note) || 'No note'}</p>
+      <div class="card tl"><div class="tlr ok"><span class="dot"></span><span>Link shared</span><span class="t">now</span></div><div class="tlr"><span class="dot"></span><span>Opened by the payer</span></div><div class="tlr"><span class="dot"></span><span>Payment received</span></div></div>
+      <button class="ghost" data-go="link">Show QR again</button></div>`;
+    return `<div class="screen center" style="padding-top:76px"><div class="okc">${icon.check}</div><div class="h1">Paid by Studio Kopi</div><p style="color:var(--ink2)">You received <b><span id="got">${usdtFmt}</span> USDT</b> for ${esc(s.note) || 'your request'}.</p>
+      <div class="card col" style="width:100%;text-align:left;gap:12px">
+        <div class="kv"><span class="muted">You asked for</span><b>${idrFmt}</b></div>
+        <div class="kv"><span class="muted">They sent</span><b>${usdtFmt} USDT</b></div>
+        <div class="kv"><span class="muted">Rate used (locked)</span><b>Rp 16.000</b></div>
+        <div class="kv total"><span class="muted">Network fee</span><b style="color:var(--ok)">Paid by sender</b></div>
+      </div>
+      <div class="tiny muted">Simulated payment for this concept</div>
+      <button class="cta" data-act="restart">Done</button></div>`;
+  },
+  upd() {
+    const s = this.s, { idrFmt, usdtFmt, isIdr } = this.vals(), m = $('#main'), sub = $('#sub'), r = $('#rng');
+    if (m) m.textContent = isIdr ? idrFmt : '$' + usdtFmt; if (sub) sub.textContent = isIdr ? '≈ ' + usdtFmt + ' USDT' : '≈ ' + idrFmt;
+    if (r) r.style.setProperty('--p', ((s.idr - 50000) / (5000000 - 50000) * 100).toFixed(1) + '%');
+    $$('[data-idr]').forEach((c) => c.classList.toggle('on', +c.dataset.idr === s.idr));
+  },
+  enter(step) {
+    const s = this.s;
+    if (step === 'enter') { clearInterval(this.lockId); this.lockId = T.every(() => { s.lock = s.lock > 0 ? s.lock - 1 : 900; const l = $('#lock'); if (l) l.textContent = mmss(s.lock); }, 1000); }
+    if (step === 'waiting') {
+      const rows = $$('.tlr');
+      T.later(() => { rows[1] && rows[1].classList.add('ok'); }, 1100);
+      T.later(() => { if (s.step !== 'waiting') return; rows[2] && rows[2].classList.add('ok'); vib([10, 40, 10]); toast(`<span class="appi">W</span><span><b>Wallet</b> · now<br>Studio Kopi paid you ${rp(s.idr)}</span>`, 'banner', true); }, 2400);
+      T.later(() => { if (cur === req && s.step === 'waiting') { s.step = 'paid'; draw(); } }, 3600);
+    }
+    if (step === 'paid') { countUp($('#got'), s.idr / RATE, usdtF); confetti(); }
   },
   click(t) {
-    if (t.dataset.go) { this.s.step = t.dataset.go; return true; }
-    if (t.dataset.cur) { this.s.cur = t.dataset.cur; return true; }
-    if (t.dataset.idr) { this.s.idr = +t.dataset.idr; return true; }
-    if ('reset' in t.dataset) { this.reset(); return true; }
+    const s = this.s, d = t.dataset, a = d.act;
+    if ('close' in d) { s.sheet = null; return true; }
+    if (d.go) { s.step = d.go; s.sheet = null; s.copied = false; return true; }
+    if (d.cur) { if (s.cur !== d.cur) s.flip = true; s.cur = d.cur; return true; }
+    if (d.idr) { const old = s.idr; s.idr = +d.idr; this.upd(); const r = $('#rng'); if (r) r.value = s.idr; const isIdr = s.cur === 'IDR'; countUp($('#main'), s.idr, (v) => isIdr ? rp(Math.round(v / 1000) * 1000) : '$' + usdtF(v / RATE), 450, old); return false; }
+    if (a === 'copy') { s.copied = true; toast('Link copied', 'ok'); vib(8); T.later(() => { if (s.step === 'link') { s.copied = false; draw(); } }, 1800); return true; }
+    if (a === 'share') { s.sheet = 'share'; return true; }
+    if (d.app) { s.sheet = null; s.step = 'waiting'; toast('Link sent via ' + d.app); return true; }
+    if (a === 'restart') { T.clear(); this.reset(); return true; }
+  },
+  input(e) {
+    if (e.target.id === 'rng') { this.s.idr = +e.target.value; this.upd(); }
+    if (e.target.id === 'note') this.s.note = e.target.value;
   }
 };
 
 /* ---------- Concept 4: Backup without the fear ---------- */
+const WORDS = ['orbit', 'maple', 'canvas', 'river', 'tiger', 'velvet', 'ladder', 'ocean', 'pepper', 'silent', 'harvest', 'cradle'];
+const ASK = [{ n: 3, o: ['river', 'canvas', 'ladder', 'velvet', 'cradle', 'tiger'] }, { n: 8, o: ['maple', 'silent', 'ocean', 'orbit', 'pepper', 'harvest'] }, { n: 11, o: ['tiger', 'cradle', 'river', 'harvest', 'ladder', 'ocean'] }];
+const CHECKS = ['At least 12 characters', 'Includes a number', 'Not a common password'];
+const COMMON = ['password', 'password123', 'qwerty', 'qwerty123', '123456', '12345678', '123456789', 'iloveyou', 'admin', 'letmein', 'password1234'];
 const backup = {
-  s: { step: 'why', ans: null, opt: 'cloud' },
-  reset() { this.s = { step: 'why', ans: null, opt: 'cloud' }; },
+  labels: { why: 'Why it matters', quiz: 'Quick check', choose: 'Choose method', cloud: 'Password', saving: 'Saving', words: 'Recovery words', verify: 'Verify words', done: 'Backed up' },
+  notes: {
+    why: 'Explain the stakes in three short lines before asking for anything. No crypto words yet.',
+    quiz: 'One question about the most common scam. A wrong answer is safe and explains why, so the lesson sticks before it matters.',
+    choose: 'Encrypted cloud backup is the default because most people lose paper. The 12 words stay available for people who want full control.',
+    cloud: 'Live feedback on the password, so people know it\'s strong enough before they tap. We say clearly that we can\'t reset it.',
+    saving: 'A short, honest progress state. Nothing technical to read.',
+    words: 'Words stay blurred unless you hold the button. That protects against screenshots and people looking over your shoulder.',
+    verify: 'Three quick taps prove the words were written down, without retyping all twelve.',
+    done: 'End on reassurance and say exactly what is needed to restore.'
+  },
+  s: {},
+  reset() { this.s = { step: 'why', ans: null, opt: 'cloud', pw: '', seen: false, vi: 0, shake: null }; },
+  idx() { return { why: 0, quiz: 1, choose: 2, cloud: 3, saving: 3, words: 3, verify: 3, done: 4 }[this.s.step]; },
   render() {
-    const s = this.s, idx = ['why','quiz','choose','done'].indexOf(s.step), right = s.ans === 'never';
-    const bars = `<div class="bars">${[0,1,2].map(i=>`<div class="${i<=Math.min(idx,2)?'on':''}"></div>`).join('')}</div>`;
+    const s = this.s, idx = this.idx(), sh = s.shake; s.shake = null;
+    const bars = `<div class="bars" aria-label="Step ${Math.min(idx + 1, 4)} of 4">${[0, 1, 2, 3].map((i) => `<div class="${i <= idx ? 'on' : ''}"></div>`).join('')}</div>`;
     if (s.step === 'why') return `<div class="screen">${bars}
-      <div style="font-size:26px;font-weight:800;line-height:1.2;letter-spacing:-.5px">Protect your money if you lose this phone</div>
-      <p style="margin:0;color:#3D424C;line-height:1.55">This wallet belongs only to you. That's the good part. It also means nobody, including us, can get it back for you without a backup.</p>
-      <div style="display:flex;flex-direction:column;gap:12px">${['Your backup is the only way back into this wallet on a new phone.','Anyone who has your backup can take your money.','We will never ask for it. Not by chat, email or phone.'].map((t,i)=>`<div class="card row" style="align-items:flex-start;border-radius:16px;padding:14px"><div class="avatar" style="width:28px;height:28px;font-size:13px">${i+1}</div><div style="font-size:14px;line-height:1.5">${t}</div></div>`).join('')}</div>
+      <div class="h1" style="font-size:27px">Protect your money if you lose this phone</div>
+      <p style="color:var(--ink2)">This wallet belongs only to you. That's the good part. It also means nobody, including us, can get it back for you without a backup.</p>
+      <div style="display:flex;flex-direction:column;gap:10px">${['Your backup is the only way back into this wallet on a new phone.', 'Anyone who has your backup can take your money.', 'We will never ask for it. Not by chat, email or phone.'].map((t, i) => `<div class="card row" style="align-items:flex-start;border-radius:16px;padding:14px"><div class="avatar" style="width:28px;height:28px;font-size:13px">${i + 1}</div><div style="font-size:14px;line-height:1.5">${t}</div></div>`).join('')}</div>
       <button class="cta" data-go="quiz">Got it</button></div>`;
-    if (s.step === 'quiz') return `<div class="screen">${bars}
-      <div class="small muted" style="font-weight:700;text-transform:uppercase;letter-spacing:.6px">Quick check</div>
+    if (s.step === 'quiz') {
+      const right = s.ans === 'never';
+      return `<div class="screen">${bars}
+      <div class="tiny muted" style="font-weight:700;text-transform:uppercase;letter-spacing:.6px">Quick check</div>
       <div style="font-size:22px;font-weight:800;line-height:1.3">Someone from "wallet support" messages you and asks for your recovery words. What do you do?</div>
-      <div style="display:flex;flex-direction:column;gap:10px">${[['share','Send them the words so they can help'],['photo','Send a screenshot instead of typing them'],['never','Never share them. Real support will never ask']].map(([id,t])=>`<button data-ans="${id}" style="min-height:56px;padding:12px 16px;border-radius:16px;border:${s.ans===id?(id==='never'?'2px solid var(--ok)':'2px solid #B3261E'):'1px solid var(--line)'};background:#fff;text-align:left;font-size:15px;font-weight:600">${t}</button>`).join('')}</div>
-      ${s.ans?`<div style="font-size:14px;line-height:1.5;padding:12px 14px;border-radius:14px;background:${right?'var(--ok-bg)':'var(--bad-bg)'};color:${right?'#13502F':'var(--bad)'}">${right?'Exactly. Anyone asking for your words is trying to steal from you.':'Not quite. Whoever has your words controls your money, so nobody legitimate will ask.'}</div>`:''}
-      <button class="cta" data-go="choose" ${right?'':'disabled'}>Continue</button></div>`;
+      <div style="display:flex;flex-direction:column;gap:10px">${[['share', 'Send them the words so they can help'], ['photo', 'Send a screenshot instead of typing them'], ['never', 'Never share them. Real support will never ask']].map(([id, t]) => `<button class="ans${s.ans === id ? (id === 'never' ? ' right' : ' wrong') : ''}${sh === id ? ' shake' : ''}" data-ans="${id}"><span>${t}</span>${s.ans === id ? `<span class="mark ${id === 'never' ? 'g' : 'r'}">${id === 'never' ? '✓' : '✕'}</span>` : ''}</button>`).join('')}</div>
+      ${s.ans ? `<div class="fb" style="background:${right ? 'var(--ok-bg)' : 'var(--bad-bg)'};color:${right ? '#13502F' : 'var(--bad-d)'}">${right ? 'Exactly. Anyone asking for your words is trying to steal from you.' : 'Not quite. Whoever has your words controls your money, so nobody legitimate will ever ask. Try again.'}</div>` : ''}
+      <button class="cta" data-go="choose" ${right ? '' : 'disabled'}>Continue</button></div>`;
+    }
     if (s.step === 'choose') return `<div class="screen">${bars}
-      <div style="font-size:24px;font-weight:800">Choose your backup</div>
-      ${[['cloud','Encrypted cloud backup','Easiest','Your recovery key is encrypted with a password only you know, then saved to your own cloud account.'],['words','Write down 12 words','Advanced','Full control, on paper. Keep it somewhere safe and never photograph it.']].map(([id,t,tag,b])=>`<button data-opt="${id}" style="display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:18px;border:${s.opt===id?'2px solid var(--accent)':'1px solid var(--line)'};background:#fff;text-align:left"><span class="row" style="justify-content:space-between;width:100%"><b style="font-size:16px">${t}</b><span class="badge" style="${id==='words'?'background:#F1EFEA;color:#3D424C':''}">${tag}</span></span><span class="small" style="color:#3D424C;line-height:1.5">${b}</span></button>`).join('')}
-      <div class="muted" style="font-size:12px">You can add the other method later in Settings.</div>
-      <button class="cta" data-go="done">${s.opt==='cloud'?'Set a backup password':'Show my 12 words'}</button></div>`;
-    return `<div class="screen center" style="padding-top:64px">${bars}<div class="okc" style="margin-top:24px">${icon.shield}</div><div style="font-size:24px;font-weight:800">Your wallet is backed up</div><p style="margin:0;color:#3D424C;line-height:1.55">${s.opt==='cloud'?'Encrypted backup saved to your cloud. You only need your password to restore it.':'Words confirmed. Keep the paper somewhere safe and offline.'}</p><button class="cta" style="align-self:stretch" data-reset>Go to wallet</button></div>`;
+      <div class="h1" style="font-size:24px">Choose your backup</div>
+      ${[['cloud', 'Encrypted cloud backup', 'Easiest', 'Your recovery key is encrypted with a password only you know, then saved to your own cloud account.'], ['words', 'Write down 12 words', 'Advanced', 'Full control, on paper. Keep it somewhere safe and never photograph it.']].map(([id, t, tag, b]) => `<button class="opt${s.opt === id ? ' on' : ''}" data-opt="${id}" aria-pressed="${s.opt === id}"><span class="row" style="justify-content:space-between;width:100%"><b style="font-size:16px">${t}</b><span class="badge" style="${id === 'words' ? 'background:#F1EFEA;color:var(--ink2)' : ''}">${tag}</span></span><span class="small" style="color:var(--ink2);line-height:1.5">${b}</span></button>`).join('')}
+      <div class="tiny muted">You can add the other method later in Settings.</div>
+      <button class="cta" data-go="${s.opt}">${s.opt === 'cloud' ? 'Set a backup password' : 'Show my 12 words'}</button></div>`;
+    if (s.step === 'cloud') return `<div class="screen">${bars}${hdr('choose', 'Set a backup password')}
+      <p class="small" style="color:var(--ink2)">This password encrypts your backup. We can't see it or reset it, so pick one you'll remember.</p>
+      <label class="pwbox"><input id="pw" type="password" value="${esc(s.pw)}" placeholder="Backup password" autocomplete="new-password" aria-label="Backup password"><button class="eye2" data-act="pweye" aria-label="Show password">${icon.eye}</button></label>
+      <div class="meter" id="meter"><i></i><i></i><i></i></div>
+      <div class="col" style="gap:10px" id="checks">${CHECKS.map((c, i) => `<div class="ck" data-i="${i}"><span class="box"></span>${c}</div>`).join('')}</div>
+      <button class="link" style="align-self:flex-start" data-act="suggest">Suggest a strong one</button>
+      <button class="cta blue" id="pwgo" data-go="saving" disabled>Encrypt and save backup</button></div>`;
+    if (s.step === 'saving') return `<div class="screen center" style="justify-content:center;gap:18px">${bars}<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px"><div class="spinw"><div class="spin"></div></div><h2 class="h">Encrypting your backup</h2><p class="small muted">Saving it to your own cloud account</p></div></div>`;
+    if (s.step === 'words') return `<div class="screen">${bars}${hdr('choose', 'Your 12 recovery words')}
+      <p class="small" style="color:var(--ink2)">Write them on paper in this order. Don't take a screenshot.</p>
+      <div class="words" id="words">${WORDS.map((w, i) => `<div style="--i:${i}"><i>${i + 1}</i>${w}</div>`).join('')}<div class="veil">${icon.eyeOff}<span>Hidden for your safety</span></div></div>
+      <button class="ghost reveal hold" data-reveal="1">${icon.eye}<span>Hold to show words</span></button>
+      <button class="cta" id="wrote" data-go="verify" ${s.seen ? '' : 'disabled'}>I wrote them down</button></div>`;
+    if (s.step === 'verify') {
+      const q = ASK[s.vi];
+      return `<div class="screen">${bars}${hdr('words', 'Check your words')}
+      <div class="dots3" aria-hidden="true">${ASK.map((a, i) => `<span class="${i < s.vi ? 'ok' : i === s.vi ? 'now' : ''}"></span>`).join('')}</div>
+      <div class="qswap" style="text-align:center"><div class="small muted">Question ${s.vi + 1} of 3</div><div class="h1">Which is word #${q.n}?</div></div>
+      <div class="grid2">${q.o.map((o) => `<button class="chip big${sh === o ? ' shake bad' : ''}" data-word="${o}">${o}</button>`).join('')}</div>
+      <div class="tip">${icon.shieldS}<span>Look at your paper, not at the screen you just saw.</span></div></div>`;
+    }
+    return `<div class="screen center" style="padding-top:64px">${bars}<div class="okc" style="margin-top:28px">${icon.shield}</div><div class="h1">Your wallet is backed up</div><p style="color:var(--ink2)">${s.opt === 'cloud' ? 'Encrypted backup saved to your cloud. To restore on a new phone you only need your backup password.' : 'Words confirmed. Keep the paper somewhere safe and offline. To restore, you\'ll need all 12 in order.'}</p><button class="cta" data-act="restart">Go to wallet</button></div>`;
+  },
+  meter() {
+    const pw = this.s.pw, ok = [pw.length >= 12, /\d/.test(pw), pw.length > 0 && !COMMON.includes(pw.toLowerCase()) && !/^(.)\1+$/.test(pw)];
+    const n = ok.filter(Boolean).length, m = $('#meter'); if (!m) return;
+    m.className = 'meter' + (pw ? ' s' + n : '');
+    $$('.ck').forEach((c, i) => c.classList.toggle('ok', ok[i]));
+    $('#pwgo').disabled = n < 3;
+  },
+  after() { if (this.s.step === 'cloud') this.meter(); },
+  enter(step) {
+    if (step === 'saving') T.later(() => { if (cur === backup && this.s.step === 'saving') { this.s.step = 'done'; draw(); } }, 1600);
+    if (step === 'done') { confetti(); vib([12, 60, 12]); }
+  },
+  reveal(on) {
+    const w = $('#words'); if (!w) return; w.classList.toggle('shown', on);
+    if (on && !this.s.seen) { this.s.seen = true; const b = $('#wrote'); if (b) b.disabled = false; }
   },
   click(t) {
-    if (t.dataset.go) { if (t.disabled) return; this.s.step = t.dataset.go; return true; }
-    if (t.dataset.ans) { this.s.ans = t.dataset.ans; return true; }
-    if (t.dataset.opt) { this.s.opt = t.dataset.opt; return true; }
-    if ('reset' in t.dataset) { this.reset(); return true; }
-  }
+    const s = this.s, d = t.dataset, a = d.act;
+    if (d.go) { if (t.disabled) return false; s.step = d.go; return true; }
+    if (d.ans) { s.ans = d.ans; if (d.ans === 'never') { confetti(18); vib(10); } else { s.shake = d.ans; vib([20, 40, 20]); } return true; }
+    if (d.opt) { s.opt = d.opt; return true; }
+    if (d.word) {
+      if (s.busy) return false;
+      if (d.word === WORDS[ASK[s.vi].n - 1]) { vib(8); t.classList.add('good'); s.busy = true; T.later(() => { s.busy = false; s.vi++; if (s.vi >= ASK.length) s.step = 'done'; draw(); }, 420); return false; }
+      s.shake = d.word; vib([20, 40, 20]); toast('Not that one. Check your paper again.', 'bad'); return true;
+    }
+    if (a === 'pweye') { const i = $('#pw'); i.type = i.type === 'password' ? 'text' : 'password'; t.setAttribute('aria-label', i.type === 'password' ? 'Show password' : 'Hide password'); t.innerHTML = i.type === 'password' ? icon.eye : icon.eyeOff; return false; }
+    if (a === 'suggest') { s.pw = 'Kopi-Malioboro-2026'; const i = $('#pw'); i.value = s.pw; i.type = 'text'; this.meter(); toast('Suggested a passphrase. Write it somewhere safe.'); return false; }
+    if (a === 'restart') { T.clear(); this.reset(); return true; }
+  },
+  input(e) { if (e.target.id === 'pw') { this.s.pw = e.target.value; this.meter(); } }
+};
+
+/* ---------- Concept 5: Pay QRIS with USDT ---------- */
+const QFEE = 0.005;
+const qris = {
+  labels: { scan: 'Scan', pay: 'Amount', confirm: 'Confirm', paying: 'Paying', done: 'Paid' },
+  notes: {
+    scan: 'Scanning is how most people pay in Indonesia, so this opens straight to the camera. The code is read and the merchant is shown before any talk about money.',
+    pay: 'The amount is in Rupiah because that is what the price tag says. USDT is the second line. The 000 key matches how people type prices here.',
+    confirm: 'The merchant gets exactly the Rupiah on the tag. Rate, fee and USDT total are shown before paying, and the rate is locked for 30 seconds. In Indonesia crypto can\'t be used as a payment instrument, so the merchant never receives USDT: a licensed partner converts it to Rupiah first. A real version would need legal and compliance review.',
+    paying: 'Conversion and payment are one action for the person, shown as plain steps instead of two separate apps.',
+    done: 'A receipt in both currencies. The same balance from concept 1 goes down, so the wallet feels like one product.'
+  },
+  s: {},
+  reset() { this.s = { step: 'scan', idr: '25000', lock: 30, shake: null, applied: false }; },
+  dark() { return this.s.step === 'scan'; },
+  calc() { const idr = parseInt(this.s.idr || '0', 10), base = idr / RATE, fee = base * QFEE; return { idr, base, fee, total: base + fee }; },
+  render() {
+    const s = this.s, c = this.calc();
+    if (s.step === 'scan') return `<div class="screen center" style="background:#0B0C0F;color:#fff;justify-content:center;gap:22px">
+      <div class="small" style="color:#C9CCD3">Point at a QRIS code</div>
+      <div class="vf"><div class="vfq">${qr(98765)}</div><span class="cn tl"></span><span class="cn tr"></span><span class="cn bl"></span><span class="cn br"></span><div class="scanline"></div></div>
+      <div class="pill" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15);color:#fff">${icon.lock} Paid in Rupiah · from your USDT</div>
+      <button class="ghost" style="background:transparent;color:#fff;border-color:#3A3D46" data-act="detect">Use sample code</button></div>`;
+    const over = c.total > wallet.bal;
+    if (s.step === 'pay') {
+      const sh = s.shake, pp = s.pop || 0; s.shake = null; s.pop = 0;
+      return `<div class="screen" style="gap:12px">${hdr('scan', 'Pay with QRIS', 'Scanned')}
+      <div class="card row" style="padding:14px"><div class="avatar" style="background:#FDEBD3">WS</div><div style="flex:1"><b>Warung Bu Sri</b><div class="tiny muted">Jl. Kaliurang · Yogyakarta</div></div><span class="badge">QRIS merchant</span></div>
+      <div class="amtbox" style="padding-top:6px"><div class="amtv${over ? ' bad' : ''}${sh ? ' shake' : ''}" style="font-size:46px">${popWrap(rp(c.idr), pp)}<i class="caret"></i></div><div class="small ${over ? 'err' : 'muted'}">${over ? 'Not enough USDT for this amount' : '≈ ' + usdtF(c.total) + ' USDT from your balance (' + usdtF(wallet.bal) + ')'}</div></div>
+      <div class="grid3">${[15000, 25000, 50000].map((v) => `<button class="chip${c.idr === v ? ' on' : ''}" data-qidr="${v}">Rp ${v / 1000}rb</button>`).join('')}</div>
+      ${keypad(true)}
+      <button class="cta blue" data-go="confirm" ${c.idr <= 0 || over ? 'disabled' : ''}>Continue</button></div>`;
+    }
+    if (s.step === 'confirm') return `<div class="screen">${hdr('pay', 'Confirm payment')}
+      <div class="card col">
+        <div style="text-align:center;padding-bottom:12px;border-bottom:1px solid #EEECE6"><div class="small muted">Warung Bu Sri gets</div><div style="font-size:38px;font-weight:800;letter-spacing:-1px">${rp(c.idr)}</div><div class="tiny muted">in Rupiah, through QRIS</div></div>
+        <div class="kv"><span class="muted">Rate</span><b>1 USDT = Rp 16.000</b></div>
+        <div class="kv"><span class="muted">Conversion fee (0.5%)</span><b>${c.fee.toFixed(4)} USDT</b></div>
+        <div class="kv total"><b>You pay</b><b>${usdtF(c.total)} USDT</b></div>
+      </div>
+      <div class="route"><b>How this works</b><span>A licensed partner sells your USDT for Rupiah, then the Rupiah goes to the merchant via QRIS. The merchant never handles crypto.</span></div>
+      <div class="ratel" style="justify-content:center">${icon.lock}<span>Rate locked for <b id="qlock">0:${String(s.lock).padStart(2, '0')}</b></span></div>
+      ${holdBtn('pay', 'Hold to pay ' + rp(c.idr))}
+      <div class="hint">Press and hold, so nothing gets paid by accident</div></div>`;
+    if (s.step === 'paying') return `<div class="screen center" style="justify-content:center;gap:20px"><div class="flipc" aria-hidden="true"><div class="in"><div class="f f1">USDT</div><div class="f f2">Rp</div></div></div><h2 class="h">Converting and paying ${rp(c.idr)}</h2>
+      <div class="card tl">${['Sold ' + usdtF(c.total) + ' USDT for Rupiah', 'Sent ' + rp(c.idr) + ' via QRIS', 'Receipt from Warung Bu Sri'].map((t) => `<div class="tlr"><span class="dot"></span><span>${t}</span></div>`).join('')}</div>
+      <p class="small muted" style="max-width:260px">Show this screen to the cashier if they ask.</p></div>`;
+    return `<div class="screen center" style="padding-top:76px"><div class="okc">${icon.check}</div><div class="h1">Paid <span id="qpaid">${rp(c.idr)}</span></div><p style="color:var(--ink2)">to Warung Bu Sri · just now</p>
+      <div class="card col" style="width:100%;text-align:left;gap:12px">
+        <div class="kv"><span class="muted">Merchant received</span><b>${rp(c.idr)}</b></div>
+        <div class="kv"><span class="muted">You spent</span><b>${usdtF(c.total)} USDT</b></div>
+        <div class="kv"><span class="muted">Reference</span><b class="mono" style="font-size:13px">QR-7K2P-4419</b></div>
+        <div class="kv total"><span class="muted">USDT left</span><b>${usdtF(wallet.bal)}</b></div>
+      </div>
+      <div class="tiny muted">Simulated payment for this concept</div>
+      <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px;width:100%"><button class="cta" style="margin-top:0" data-act="again">Done</button><button class="ghost" data-act="wallet">See it in my wallet</button></div></div>`;
+  },
+  key(k) {
+    const s = this.s; let a = s.idr;
+    if (k === 'del') a = a.length > 1 ? a.slice(0, -1) : '0';
+    else { const add = k === '000' ? '000' : k; if (a === '0') a = k === '000' ? '0' : add; else { if ((a + add).length > 9) { s.shake = 1; return; } a += add; } }
+    s.idr = a; s.pop = k === 'del' || a === '0' ? 0 : k.length; if (this.calc().total > wallet.bal) s.shake = 1;
+  },
+  enter(step) {
+    const s = this.s;
+    if (step === 'scan') T.later(() => { if (cur === qris && s.step === 'scan') this.detect(); }, 2600);
+    if (step === 'confirm') { s.lock = 30; clearInterval(this.lockId); this.lockId = T.every(() => { if (s.step !== 'confirm') return; s.lock--; if (s.lock <= 0) { s.lock = 30; toast('Rate refreshed. Still 1 USDT = Rp 16.000'); } const l = $('#qlock'); if (l) { l.textContent = '0:' + String(s.lock).padStart(2, '0'); l.closest('.ratel').classList.toggle('soon', s.lock <= 5); } }, 1000); }
+    if (step === 'paying') { const rows = $$('.tlr'); [350, 1100, 1800].forEach((ms, i) => T.later(() => { rows[i] && rows[i].classList.add('ok'); vib(6); }, ms)); T.later(() => { if (cur === qris && s.step === 'paying') { s.step = 'done'; draw(); } }, 2400); }
+    if (step === 'done') {
+      const c = this.calc();
+      if (!s.applied) { send.s.animBal = wallet.bal; wallet.bal = Math.round((wallet.bal - c.total) * 100) / 100; wallet.hist.unshift({ c: 'WS', n: 'Warung Bu Sri', d: 'QRIS · ' + rp(c.idr) + ' · Just now', a: -c.total, fresh: true }); s.applied = true; }
+      countUp($('#qpaid'), c.idr, rp); confetti(); vib([12, 60, 12]);
+      const left = $$('.kv b').pop(); if (left) left.textContent = usdtF(wallet.bal);
+    }
+  },
+  detect() { const vf = $('.vf'); if (vf) vf.classList.add('found'); vib(15); T.later(() => { if (cur === qris && this.s.step === 'scan') { this.s.step = 'pay'; draw(); } }, 450); },
+  click(t) {
+    const s = this.s, d = t.dataset, a = d.act;
+    if (d.key) { this.key(d.key); return true; }
+    if (d.qidr) { s.idr = d.qidr; return true; }
+    if (d.go) { s.step = d.go; return true; }
+    if (a === 'detect') { this.detect(); return false; }
+    if (a === 'again') { T.clear(); this.reset(); return true; }
+    if (a === 'wallet') { send.s = { ...send.s, step: 'home', sheet: null }; switchTo(0, true); toast('Paid at Warung Bu Sri, balance updated', 'ok'); return false; }
+  },
+  hold(name) { if (name === 'pay') { this.s.step = 'paying'; return true; } }
 };
 
 /* ---------- Shell ---------- */
 const concepts = [
-  { m: send, t: 'Send without picking a network', d: 'Pick a person, the wallet picks the cheapest safe route, fees shown in dollars.' },
-  { m: look, t: 'Look-alike address check', d: 'Catch address-poisoning scams before money leaves.' },
-  { m: req, t: 'Request in Rupiah', d: 'Ask in your own currency, share one link, receive USDT.' },
-  { m: backup, t: 'Backup without the fear', d: 'Explain first, check understanding, then offer an encrypted backup.' }
+  { m: send, t: 'Send without picking a network', d: 'Pick a person, the wallet picks the cheapest route they can receive on. Fees in dollars.',
+    b: ['Sending USDT means choosing a network. Pick one the recipient can\'t receive on and the money can be lost, and most people don\'t know what a network is.', 'If the wallet picks a network both sides support, wrong-network losses drop and first-time senders finish more often.', 'Wrong-network support tickets, send completion rate, time from "Send" to "Arrived".'] },
+  { m: look, t: 'Look-alike address check', d: 'Catch address-poisoning scams before money leaves, with a safe hold if someone insists.',
+    b: ['Address poisoning plants look-alike addresses in your history. People only check the first and last few characters, so they copy the wrong one.', 'Showing the exact difference and making the saved address the default stops most poisoned sends without slowing normal ones.', 'Sends to flagged addresses, % who switch to the saved address, cancels during the hold, false-alarm rate.'] },
+  { m: req, t: 'Request in Rupiah', d: 'Ask in your own currency, share one link or QR, receive USDT.',
+    b: ['Indonesian freelancers price work in Rupiah while clients pay in USDT. Moving rates and network confusion lead to wrong amounts and back-and-forth.', 'A Rupiah request with a locked rate and one link means people get paid the right amount, faster.', 'Links paid in full, time from link to payment, follow-up messages per request.'] },
+  { m: backup, t: 'Backup without the fear', d: 'Explain first, check understanding, then an encrypted backup or verified 12 words.',
+    b: ['Many people skip backup or store their words unsafely, and fake "support" accounts ask for those words.', 'Explaining first, one quick quiz and an encrypted default raise backup completion without raising phishing risk.', 'Backup completion in week one, quiz correct on first try, successful restores.'] },
+  { m: qris, t: 'Pay QRIS with USDT', d: 'Scan any QRIS code, pay in Rupiah from your USDT balance. The merchant only sees Rupiah.', isNew: true,
+    b: ['People hold USDT as savings, but daily life in Indonesia runs on QRIS in Rupiah. Spending it means cashing out across several apps first.', 'Converting to Rupiah at the moment of payment, through a licensed partner, makes USDT useful every day while the merchant just receives Rupiah.', 'QRIS payments per active user per week, failed payments at the till, seconds from scan to paid.'] }
 ];
-let cur = send;
-const phone = $('#phone');
-function draw() { phone.innerHTML = cur.render(); }
-function renderTabs() {
-  $('#tabs').innerHTML = concepts.map((c, i) => `<button class="tab" role="tab" aria-selected="${c.m === cur}" data-tab="${i}"><i>${i + 1}</i><div><b>${c.t}</b><span>${c.d}</span></div></button>`).join('');
+concepts.forEach((c) => c.m.reset());
+let cur = send, last = {};
+const host = $('#host'), phone = $('#phone');
+function draw() {
+  const step = cur.s.step, sheetName = cur.s.sheet || '';
+  const same = last.m === cur && last.step === step;
+  host.innerHTML = cur.render();
+  const sc = $('.screen', host); if (sc && same) sc.classList.add('still');
+  if (sc && !same && last.m === cur && cur.labels) { const o = Object.keys(cur.labels); if (o.indexOf(step) > -1 && o.indexOf(step) < o.indexOf(last.step)) sc.classList.add('rev'); }
+  const sw = $('.sheet-wrap', host); if (sw && same && last.sheet === sheetName) sw.classList.add('still');
+  last = { m: cur, step, sheet: sheetName };
+  if (cur.after) cur.after();
+  if (!same) { if (sc) sc.scrollTop = 0; note(); if (cur.enter) cur.enter(step); }
 }
-$('#tabs').addEventListener('click', (e) => { const b = e.target.closest('[data-tab]'); if (!b) return; cur = concepts[+b.dataset.tab].m; cur.reset(); renderTabs(); draw(); });
-phone.addEventListener('click', (e) => { const t = e.target.closest('button'); if (!t || t.disabled) return; if (cur.click(t)) draw(); });
+function note() {
+  const i = concepts.findIndex((c) => c.m === cur), step = cur.s.step;
+  $('#nstep').textContent = 'Concept ' + (i + 1) + ' · ' + (cur.labels[step] || step);
+  phone.classList.toggle('dark', !!(cur.dark && cur.dark()));
+  const p = $('#ntext'); p.textContent = cur.notes[step] || ''; p.classList.remove('swap'); void p.offsetWidth; p.classList.add('swap');
+}
+function renderTabs() {
+  $('#tabs').innerHTML = concepts.map((c, i) => `<button class="tab" role="tab" aria-selected="${c.m === cur}" data-tab="${i}"><i>${i + 1}</i><div><b>${c.t}${c.isNew ? ' <em class="new">New</em>' : ''}</b><span>${c.d}</span></div></button>`).join('');
+  const c = concepts.find((x) => x.m === cur);
+  $('#brief').innerHTML = [['Problem', c.b[0]], ['Hypothesis', c.b[1]], ['How I\'d measure it', c.b[2]]].map(([k, v]) => `<div><b>${k}</b><span>${v}</span></div>`).join('');
+}
+function switchTo(i, keep = false) {
+  T.clear(); holdEnd(); $$('.toast', layer).forEach((t) => t.remove());
+  cur = concepts[i].m; if (!keep) cur.reset();
+  last = {}; renderTabs(); draw();
+}
+$('#tabs').addEventListener('click', (e) => { const b = e.target.closest('[data-tab]'); if (b) { switchTo(+b.dataset.tab); if (innerWidth < 900) phone.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); } });
+$('#restart').addEventListener('click', () => switchTo(concepts.findIndex((c) => c.m === cur)));
+
+phone.addEventListener('click', (e) => {
+  const t = e.target.closest('button,[data-close]');
+  if (!t || t.disabled || t.dataset.hold || t.dataset.reveal) return;
+  vib(5);
+  if (cur.click(t)) draw();
+});
 phone.addEventListener('input', (e) => { if (cur.input) cur.input(e); });
+
+/* press-and-hold */
+let holdT = null, holdEl = null, revealing = false;
+function holdStart(el) {
+  if (el.disabled || holdEl) return;
+  holdEl = el; el.classList.add('holding'); vib(8);
+  const sp = el.querySelector('span'); if (sp) { el.dataset.label = sp.textContent; sp.textContent = 'Keep holding…'; }
+  holdT = setTimeout(() => {
+    const name = el.dataset.hold, m = cur; holdEl = null; holdT = null;
+    el.classList.remove('holding'); el.classList.add('held'); if (sp) sp.innerHTML = icon.tickS + ' Confirmed'; vib([10, 40, 10]);
+    setTimeout(() => { if (cur === m && cur.hold && cur.hold(name)) draw(); }, 340);
+  }, 1100);
+}
+function holdEnd() {
+  if (holdT) { clearTimeout(holdT); holdT = null; }
+  if (holdEl) { holdEl.classList.remove('holding'); const sp = holdEl.querySelector('span'); if (sp && holdEl.dataset.label) sp.textContent = holdEl.dataset.label; holdEl = null; }
+  if (revealing) { revealing = false; $$('.reveal').forEach((r) => r.classList.remove('holding')); if (cur.reveal) cur.reveal(false); }
+}
+function revealStart(el) { revealing = true; el.classList.add('holding'); vib(6); if (cur.reveal) cur.reveal(true); }
+phone.addEventListener('pointerdown', (e) => {
+  const h = e.target.closest('[data-hold]'); if (h && !h.disabled) { e.preventDefault(); holdStart(h); return; }
+  const r = e.target.closest('[data-reveal]'); if (r) { e.preventDefault(); revealStart(r); }
+});
+['pointerup', 'pointercancel', 'blur'].forEach((ev) => window.addEventListener(ev, holdEnd));
+phone.addEventListener('pointerleave', holdEnd);
+phone.addEventListener('contextmenu', (e) => { if (e.target.closest('[data-hold],[data-reveal]')) e.preventDefault(); });
+phone.addEventListener('keydown', (e) => {
+  if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) {
+    const h = e.target.closest('[data-hold]'); if (h) { e.preventDefault(); holdStart(h); return; }
+    const r = e.target.closest('[data-reveal]'); if (r) { e.preventDefault(); revealStart(r); }
+  }
+});
+phone.addEventListener('keyup', (e) => { if (e.key === ' ' || e.key === 'Enter') holdEnd(); });
+
+/* physical keyboard on the amount screen, Escape closes sheets */
+document.addEventListener('keydown', (e) => {
+  if (e.target.matches('input')) return;
+  if (e.key === 'Escape' && cur.s.sheet) { cur.s.sheet = null; draw(); return; }
+  if (cur === qris && qris.s.step === 'pay') {
+    let k = null; if (/^[0-9]$/.test(e.key)) k = e.key; else if (e.key === 'Backspace') k = 'del';
+    if (k) { e.preventDefault(); qris.key(k); draw(); } return;
+  }
+  if (cur === send && send.s.step === 'amount') {
+    let k = null;
+    if (/^[0-9]$/.test(e.key)) k = e.key; else if (e.key === '.' || e.key === ',') k = '.'; else if (e.key === 'Backspace') k = 'del';
+    else if (e.key === 'Enter') { const b = $('[data-go="review"]'); if (b && !b.disabled) { send.s.step = 'review'; draw(); } return; }
+    if (k) { e.preventDefault(); send.key(k); draw(); }
+  }
+});
+
+const clock = () => { const d = new Date(); $('#clock').textContent = d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0'); };
+clock(); setInterval(clock, 30000);
 renderTabs(); draw();
 </script>
 </body>

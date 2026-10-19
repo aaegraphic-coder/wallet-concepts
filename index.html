@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stablecoin Wallet Concepts · Angga Ady Ermawan</title>
+<meta name="description" content="Four clickable wallet UX concepts: send without picking a network, look-alike address check, request in Rupiah, and a calmer backup flow.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EDEBE5;--ground:#F6F5F1;--ink:#15171C;--muted:#5E6470;--line:#E4E2DC;--card:#FFFFFF;--accent:#2E4BDB;--accent-d:#1F35A8;--ok:#1E7A4C;--ok-bg:#E2F2E8;--bad:#8C1D16;--bad-bg:#FDECEA}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;min-height:100vh}
+.page{max-width:1080px;margin:0 auto;padding:40px 16px 64px;display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start;justify-content:center}
+.side{flex:1 1 320px;max-width:420px;display:flex;flex-direction:column;gap:16px}
+.side h1{font-size:32px;line-height:1.15;margin:0;letter-spacing:-.5px}
+.side p{margin:0;color:#3D424C;line-height:1.6}
+.tabs{display:flex;flex-direction:column;gap:8px}
+.tab{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:var(--card);font:inherit;color:var(--ink);cursor:pointer;transition:border-color .25s,box-shadow .2s,transform .16s}
+.tab:hover{box-shadow:0 6px 16px rgba(21,23,28,.08)}
+.tab:active{transform:scale(.98)}
+.tab[aria-selected="true"]{border:2px solid var(--accent);padding:13px 15px}
+.tab b{display:block;font-size:15px}
+.tab span{font-size:13px;color:var(--muted);line-height:1.45}
+.tab i{font-style:normal;width:28px;height:28px;border-radius:14px;background:#E3E7FB;color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
+.note{font-size:12px;color:var(--muted)}
+.phone{width:390px;max-width:100%;height:844px;border-radius:44px;background:var(--ground);box-shadow:0 30px 60px rgba(21,23,28,.18),0 0 0 10px #15171C;overflow:hidden;position:relative;flex-shrink:0}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;gap:16px;padding:56px 24px 24px;overflow-y:auto;animation:screenIn .42s cubic-bezier(.2,.8,.2,1) both}
+.screen>*{animation:rise .45s cubic-bezier(.2,.8,.2,1) both}
+.screen>*:nth-child(2){animation-delay:.05s}.screen>*:nth-child(3){animation-delay:.1s}.screen>*:nth-child(4){animation-delay:.15s}.screen>*:nth-child(5){animation-delay:.2s}.screen>*:nth-child(6){animation-delay:.25s}.screen>*:nth-child(7){animation-delay:.3s}
+.center{align-items:center;text-align:center}
+@keyframes screenIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes popIn{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+@keyframes glow{0%,100%{background:#FAD4CF}50%{background:#F5A99F}}
+button{font:inherit;cursor:pointer;color:var(--ink);transition:transform .16s cubic-bezier(.2,.8,.2,1),box-shadow .2s,background-color .25s,border-color .25s}
+button:hover{box-shadow:0 6px 16px rgba(21,23,28,.08)}
+button:active{transform:scale(.97)}
+button:disabled{cursor:not-allowed;box-shadow:none}
+button:focus-visible,input:focus-visible,.tab:focus-visible{outline:3px solid rgba(46,75,219,.45);outline-offset:2px}
+.h{font-size:20px;font-weight:700;margin:0}
+.row{display:flex;align-items:center;gap:12px}
+.back{width:44px;height:44px;border-radius:22px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px}
+.cta{height:56px;border-radius:18px;border:0;background:var(--ink);color:#fff;font-size:16px;font-weight:700;margin-top:auto;flex-shrink:0}
+.cta.blue{background:var(--accent)}
+.cta:disabled{background:#A7ABB4}
+.ghost{min-height:48px;border-radius:18px;border:1px solid var(--line);background:var(--card);font-size:14px;font-weight:600;flex-shrink:0}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.pick{display:flex;align-items:center;gap:12px;padding:14px;border-radius:18px;border:1px solid var(--line);background:var(--card);text-align:left;width:100%}
+.avatar{width:44px;height:44px;border-radius:22px;background:#E3E7FB;color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.badge{font-size:11px;font-weight:700;color:var(--ok);background:var(--ok-bg);padding:4px 8px;border-radius:10px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.chip{height:46px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-size:14px;font-weight:700}
+.chip.on{border:2px solid var(--accent)}
+.okc{width:84px;height:84px;border-radius:42px;background:var(--ok);display:flex;align-items:center;justify-content:center;animation:popIn .5s .1s cubic-bezier(.2,.8,.2,1) both}
+.okc path{stroke-dasharray:60;stroke-dashoffset:60;animation:draw .55s .35s ease-out forwards}
+.mono{font-family:'JetBrains Mono',monospace;font-size:15px;word-break:break-all;line-height:1.6}
+.diff{background:#FAD4CF;color:var(--bad);padding:1px 2px;border-radius:4px;animation:glow 1.6s .9s ease-in-out 2}
+.same{background:#DCEFE3;color:#13502F;padding:1px 2px;border-radius:4px}
+.warn{background:var(--bad-bg);border:1px solid #F1B8B2;border-radius:22px;padding:18px;animation:rise .45s .05s both,shake .55s .55s ease-in-out}
+.kv{display:flex;justify-content:space-between;font-size:14px}
+.route{background:#E9EDFC;border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.link{align-self:flex-start;min-height:44px;border:0;background:transparent;color:var(--accent-d);font-size:13px;font-weight:700;text-decoration:underline;padding:0 2px}
+.link:hover{box-shadow:none}
+.amount{width:200px;border:0;background:transparent;font:inherit;font-size:56px;font-weight:800;letter-spacing:-1.5px;color:var(--ink);outline:none}
+.bars{display:flex;gap:6px}.bars div{flex:1;height:4px;border-radius:2px;background:#DDDBD4;transition:background-color .45s}.bars div.on{background:var(--accent)}
+.foot{font-size:11px;color:#6B707B;text-align:center;margin-top:auto}
+@media (max-width:440px){.phone{border-radius:0;box-shadow:none;height:780px}.page{padding:24px 0 48px}.side{padding:0 16px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.okc path{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+<main class="page">
+  <section class="side">
+    <h1>Stablecoin wallet concepts</h1>
+    <p>Four small ideas for making USDT wallets feel safe and simple for everyday people. Tap through them on the phone.</p>
+    <div class="tabs" role="tablist" aria-label="Concepts" id="tabs"></div>
+    <p class="note">Concepts by Angga Ady Ermawan, built with AI-assisted prototyping tools. Not affiliated with or endorsed by Tether or any wallet provider. Fees, rates and names are examples.</p>
+  </section>
+  <div class="phone" id="phone" aria-live="polite"></div>
+</main>
+<script>
+const $ = (s) => document.querySelector(s);
+const money = (n) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const icon = {
+  back: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
+  check: '<svg aria-hidden="true" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  shield: '<svg aria-hidden="true" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7z"/><path d="M9 12l2 2 4-4"/></svg>',
+  send: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg>',
+  warn: '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4"/><path d="M12 17.5v.5"/></svg>'
+};
+const backBtn = (to) => `<button class="back" data-go="${to}" aria-label="Back">${icon.back}</button>`;
+
+/* ---------- Concept 1: Send without picking a network ---------- */
+const nets = { auto: { name: 'Auto (TRON)', fee: 0.4, eta: '~1 min' }, ton: { name: 'TON', fee: 0.05, eta: '~10 sec' }, eth: { name: 'Ethereum', fee: 1.8, eta: '~2 min' } };
+const contacts = [
+  { id: 'rina', init: 'RP', name: 'Rina Putri', meta: "You've sent 4 times · last 2 weeks ago", badge: 'Verified' },
+  { id: 'budi', init: 'BS', name: 'Budi Santoso', meta: 'Sent once · last month', badge: 'Saved' }
+];
+const send = {
+  s: { step: 'home', to: null, amt: '50', net: 'auto', manual: false },
+  reset() { this.s = { step: 'home', to: null, amt: '50', net: 'auto', manual: false }; },
+  render() {
+    const s = this.s, amt = parseFloat(s.amt) || 0, net = nets[s.net], bal = 1240.5, over = amt + net.fee > bal;
+    if (s.step === 'home') return `<div class="screen">
+      <div class="row" style="justify-content:space-between"><div class="row"><div class="avatar" style="width:36px;height:36px">AE</div><b>My wallet</b></div><span class="small muted" style="background:#fff;border:1px solid var(--line);padding:6px 10px;border-radius:20px">Self-custodial</span></div>
+      <div style="background:var(--ink);color:#fff;border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:6px">
+        <span class="small" style="color:#C9CCD3">USDT balance</span>
+        <span style="font-size:40px;font-weight:800;letter-spacing:-1px">${money(bal)}</span>
+        <span class="small" style="color:#C9CCD3">1,240.50 USDT · 1 USDT ≈ $1.00</span>
+        <div class="row" style="margin-top:16px;gap:10px"><button data-go="to" style="flex:1;height:48px;border-radius:14px;border:0;background:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px">${icon.send} Send</button><button style="flex:1;height:48px;border-radius:14px;border:1px solid #3A3D46;background:transparent;color:#fff;font-weight:600;font-size:15px">Receive</button></div>
+      </div>
+      <div>${[['RP','Rina Putri','Sent · Oct 4','−$120.00'],['CL','Client payment','Received · Oct 1','+$850.00'],['BS','Budi Santoso','Sent · Sep 22','−$40.00']].map(r=>`<div class="row" style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="avatar" style="width:40px;height:40px;background:#fff;border:1px solid var(--line);color:var(--ink)">${r[0]}</div><div style="flex:1"><b style="font-size:15px">${r[1]}</b><div class="small muted">${r[2]}</div></div><b style="color:${r[3][0]==='+'?'var(--ok)':'var(--ink)'}">${r[3]}</b></div>`).join('')}</div>
+      <div class="foot">Concept by Angga Ady Ermawan</div></div>`;
+    if (s.step === 'to') return `<div class="screen">
+      <div class="row">${backBtn('home')}<h2 class="h">Send to</h2></div>
+      <p class="muted" style="margin:0;line-height:1.5;font-size:14px">Pick someone you've paid before. No network to choose, no long address to copy.</p>
+      <div style="display:flex;flex-direction:column;gap:10px">${contacts.map(c=>`<button class="pick" data-contact="${c.id}"><div class="avatar">${c.init}</div><div style="flex:1"><b style="font-size:15px">${c.name}</b><div class="small muted" style="font-size:12px">${c.meta}</div></div><span class="badge">${c.badge}</span></button>`).join('')}</div>
+      <button class="pick" data-contact="new" style="border-style:dashed;background:transparent"><div class="avatar" style="background:#fff;border:1px solid var(--line);color:var(--ink)">+</div><div><b style="font-size:15px">Paste a new address</b><div class="small muted" style="font-size:12px">We'll check it before you send</div></div></button></div>`;
+    if (s.step === 'amount') return `<div class="screen">
+      <div class="row">${backBtn('to')}<div><div class="small muted">Sending to</div><b style="font-size:17px">${s.to.name}</b></div></div>
+      ${s.to.id==='new'?`<div style="background:#FFF4E0;border:1px solid #F0CF94;border-radius:16px;padding:12px 14px;font-size:13px;line-height:1.5;color:#5A3B00"><b>New address.</b> Check the first and last 4 characters with the person: <b>TQ7v</b>…<b>9aZk</b>.</div>`:''}
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:28px 0 8px"><label for="amt" class="small muted">Amount in dollars</label><div class="row" style="gap:4px;align-items:baseline"><span style="font-size:44px;font-weight:800">$</span><input id="amt" class="amount" type="number" inputmode="decimal" min="0" value="${s.amt}"></div><div class="small" id="bal" style="color:${over?'#B3261E':'var(--muted)'}">${over?'Not enough balance for this amount plus fee':'Available '+money(bal)}</div></div>
+      <div class="grid4">${[10,50,100,250].map(v=>`<button class="chip${+s.amt===v?' on':''}" data-amt="${v}">$${v}</button>`).join('')}</div>
+      <button class="cta blue" data-go="review" ${amt<=0||over?'disabled':''}>Continue</button></div>`;
+    if (s.step === 'review') return `<div class="screen">
+      <div class="row">${backBtn('amount')}<h2 class="h">Review</h2></div>
+      <div class="card" style="display:flex;flex-direction:column;gap:14px">
+        <div style="text-align:center;padding-bottom:12px;border-bottom:1px solid #EEECE6"><div class="small muted">${s.to.name} gets</div><div style="font-size:36px;font-weight:800;letter-spacing:-1px">${money(amt)}</div><div class="muted" style="font-size:12px">${amt.toFixed(2)} USDT, exactly</div></div>
+        <div class="kv"><span class="muted">Network fee</span><b>${money(net.fee)}</b></div>
+        <div class="kv"><span class="muted">Arrives in</span><b>${net.eta}</b></div>
+        <div class="kv" style="padding-top:12px;border-top:1px solid #EEECE6;font-size:15px"><b>You pay</b><b>${money(amt+net.fee)}</b></div>
+      </div>
+      <div class="route"><b style="color:var(--accent-d);font-size:14px">${s.net==='auto'?'Best route picked for you':'You chose '+net.name}</b><span style="font-size:13px;color:#2B3570;line-height:1.5">${s.net==='auto'?'Cheapest safe network for this transfer, and one '+s.to.name.split(' ')[0]+"'s wallet already accepts. Nothing to choose.":'Make sure the recipient can receive USDT on '+net.name+'.'}</span>
+        <button class="link" data-toggle="manual">${s.manual?'Hide network options':'Choose network yourself'}</button>
+        ${s.manual?`<div style="display:flex;flex-direction:column;gap:8px">${Object.entries(nets).map(([k,n])=>`<button data-net="${k}" style="display:flex;justify-content:space-between;align-items:center;min-height:44px;padding:0 14px;border-radius:12px;border:${s.net===k?'2px solid var(--accent)':'1px solid var(--line)'};background:#fff;font-size:14px"><b>${n.name}</b><span class="muted">${money(n.fee)} · ${n.eta}</span></button>`).join('')}<span style="font-size:11px;color:#4A5170">Example fees for this concept.</span></div>`:''}
+      </div>
+      <button class="cta" data-go="sending">Send ${money(amt)}</button></div>`;
+    if (s.step === 'sending') return `<div class="screen center" style="justify-content:center"><div style="width:72px;height:72px;border-radius:36px;border:5px solid var(--line);border-top-color:var(--accent);animation:spin .9s linear infinite"></div><h2 class="h">Sending ${money(amt)} to ${s.to.name}</h2><p class="muted" style="margin:0;max-width:260px;line-height:1.5;font-size:14px">You can close the app. We'll tell you both the moment it arrives.</p></div>`;
+    return `<div class="screen" style="padding-top:96px">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center"><div class="okc">${icon.check}</div><div style="font-size:26px;font-weight:800">Arrived</div><p style="margin:0;color:#3D424C;line-height:1.5">${s.to.name} received <b>${money(amt)}</b>. They've been notified.</p></div>
+      <div class="card" style="display:flex;flex-direction:column;gap:14px">${[['Sent from your wallet','now'],['Confirmed on the network','+40s'],['Arrived in '+s.to.name+"'s wallet",'+1 min']].map(x=>`<div class="row"><span class="badge" style="padding:4px 7px">✓</span><b style="flex:1;font-size:14px;font-weight:600">${x[0]}</b><span class="muted" style="font-size:12px">${x[1]}</span></div>`).join('')}</div>
+      <p class="small muted" style="text-align:center;margin:0">Paid ${money(net.fee)} network fee · Receipt saved</p>
+      <button class="cta" data-reset>Done</button></div>`;
+  },
+  click(t) {
+    const s = this.s;
+    if (t.dataset.go) { s.step = t.dataset.go; if (s.step === 'sending') setTimeout(() => { if (cur === send && s.step === 'sending') { s.step = 'done'; draw(); } }, 2200); return true; }
+    if (t.dataset.contact) { const c = contacts.find(c => c.id === t.dataset.contact) || { id: 'new', init: 'TQ', name: 'TQ7v…9aZk' }; s.to = c; s.step = 'amount'; return true; }
+    if (t.dataset.amt) { s.amt = t.dataset.amt; return true; }
+    if (t.dataset.toggle) { s.manual = !s.manual; return true; }
+    if (t.dataset.net) { s.net = t.dataset.net; return true; }
+    if ('reset' in t.dataset) { this.reset(); return true; }
+  },
+  input(e) { if (e.target.id === 'amt') { this.s.amt = e.target.value; const amt = parseFloat(this.s.amt) || 0, over = amt + nets[this.s.net].fee > 1240.5; const b = $('#bal'); b.textContent = over ? 'Not enough balance for this amount plus fee' : 'Available ' + money(1240.5); b.style.color = over ? '#B3261E' : 'var(--muted)'; document.querySelector('[data-go="review"]').disabled = amt <= 0 || over; document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', +c.dataset.amt === +this.s.amt)); } }
+};
+
+/* ---------- Concept 2: Look-alike address check ---------- */
+const look = {
+  s: { step: 'warn', confirm: false },
+  reset() { this.s = { step: 'warn', confirm: false }; },
+  render() {
+    const s = this.s;
+    if (s.step === 'warn') return `<div class="screen">
+      <div class="small muted">Send to · pasted address</div>
+      <div class="warn"><div class="row" style="color:var(--bad)">${icon.warn}<b style="font-size:18px">This looks like Rina's address, but it isn't</b></div><p style="margin:10px 0 0;font-size:14px;line-height:1.55;color:#5A1A15">Scammers create addresses that start and end the same as someone you pay, hoping you copy the wrong one from your history.</p></div>
+      <div class="card" style="display:flex;flex-direction:column;gap:14px">
+        <div><div class="small muted" style="font-weight:700;text-transform:uppercase;letter-spacing:.6px;font-size:12px">You pasted</div><div class="mono"><b>TQ7v</b><span class="diff">Xm3RkPq8LwYz2NcHf5Ud</span><b>9aZk</b></div></div>
+        <div style="height:1px;background:#EEECE6"></div>
+        <div><div class="small muted" style="font-weight:700;text-transform:uppercase;letter-spacing:.6px;font-size:12px">Rina Putri · saved, paid 4 times</div><div class="mono"><b>TQ7v</b><span class="same">Bf8NhJ2sTeA6oKrV1GcW</span><b>9aZk</b></div></div>
+        <div class="small" style="color:#3D424C">Same first 4 and last 4 characters. The middle is completely different.</div>
+      </div>
+      <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+        <button class="cta" style="margin-top:0" data-go="safe">Send to Rina's saved address</button>
+        <button class="ghost" data-toggle="confirm">${s.confirm?'I confirmed with Rina directly, continue':'This is a new address from Rina'}</button>
+        ${s.confirm?'<div class="small" style="line-height:1.5;color:#3D424C;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px">Only continue if Rina told you this new address herself, by call or in person. We\'ll hold the transfer for 10 minutes so you can cancel.</div>':''}
+      </div></div>`;
+    return `<div class="screen center" style="padding-top:96px"><div class="okc">${icon.shield}</div><div style="font-size:24px;font-weight:800">Switched to the saved address</div><p style="margin:0;color:#3D424C;line-height:1.55;max-width:300px">The look-alike address is now blocked for you, and it won't appear in your history.</p><button class="cta" style="align-self:stretch" data-reset>Continue to amount</button></div>`;
+  },
+  click(t) {
+    if (t.dataset.go) { this.s.step = t.dataset.go; return true; }
+    if (t.dataset.toggle) { this.s.confirm = !this.s.confirm; return true; }
+    if ('reset' in t.dataset) { this.reset(); return true; }
+  }
+};
+
+/* ---------- Concept 3: Request in Rupiah ---------- */
+const RATE = 16000;
+const req = {
+  s: { step: 'enter', cur: 'IDR', idr: 750000 },
+  reset() { this.s = { step: 'enter', cur: 'IDR', idr: 750000 }; },
+  render() {
+    const s = this.s, usdt = s.idr / RATE, idrFmt = 'Rp ' + s.idr.toLocaleString('id-ID'), usdtFmt = usdt.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), isIdr = s.cur === 'IDR';
+    if (s.step === 'enter') return `<div class="screen">
+      <h2 class="h">Request money</h2>
+      <div style="display:flex;gap:6px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:4px;align-self:flex-start">${['IDR','USD'].map(c=>`<button data-cur="${c}" style="min-height:44px;padding:0 16px;border-radius:10px;border:0;background:${s.cur===c?'var(--ink)':'transparent'};color:${s.cur===c?'#fff':'var(--ink)'};font-size:14px;font-weight:700">${c==='IDR'?'Rupiah':'Dollar'}</button>`).join('')}</div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:36px 0 12px"><div class="small muted">You'll receive</div><div style="font-size:46px;font-weight:800;letter-spacing:-1.5px">${isIdr?idrFmt:'$'+usdtFmt}</div><div class="muted" style="font-size:14px">${isIdr?'≈ '+usdtFmt+' USDT':'≈ '+idrFmt}</div></div>
+      <div class="grid3">${[250000,750000,1500000].map(v=>`<button class="chip${s.idr===v?' on':''}" data-idr="${v}">${isIdr?'Rp '+(v/1000).toLocaleString('id-ID')+'rb':'$'+(v/RATE).toFixed(2)}</button>`).join('')}</div>
+      <div style="display:flex;flex-direction:column;gap:6px"><label for="note" class="small muted">What's it for?</label><input id="note" type="text" value="Logo design, October" style="height:48px;border-radius:14px;border:1px solid var(--line);background:#fff;padding:0 14px;font:inherit;font-size:15px"></div>
+      <div class="muted" style="font-size:12px">Example rate: 1 USDT ≈ Rp 16.000, locked for 15 minutes.</div>
+      <button class="cta blue" data-go="link">Create payment link</button></div>`;
+    if (s.step === 'link') return `<div class="screen">
+      <h2 class="h">Your link is ready</h2>
+      <div class="card" style="display:flex;flex-direction:column;align-items:center;gap:12px;border-radius:24px;padding:22px"><div style="width:168px;height:168px;border-radius:16px;border:2px dashed #B9BDC6;display:flex;align-items:center;justify-content:center" class="small muted">[QR code]</div><div style="font-size:30px;font-weight:800">${idrFmt}</div><div class="muted" style="font-size:14px">Payer sends ${usdtFmt} USDT · Logo design, October</div><div class="row small" style="width:100%;background:var(--ground);border-radius:12px;padding:10px 12px;color:#3D424C"><span style="flex:1">pay.wallet/angga/7Kp2</span><b style="color:var(--accent)">Copy</b></div></div>
+      <p class="small" style="margin:0;text-align:center;line-height:1.5;color:#3D424C">The payer doesn't need to pick a network. Their wallet routes it, and you get exactly ${usdtFmt} USDT.</p>
+      <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px"><button class="cta" style="margin-top:0" data-go="paid">Share link</button><button class="ghost" data-go="enter">Edit request</button></div></div>`;
+    return `<div class="screen center" style="padding-top:96px"><div class="okc">${icon.check}</div><div style="font-size:24px;font-weight:800">Paid by Studio Kopi</div><p style="margin:0;color:#3D424C;line-height:1.55">You received <b>${usdtFmt} USDT</b> (≈ ${idrFmt}) for Logo design, October.</p><div class="muted" style="font-size:12px">Simulated payment for this concept</div><button class="cta" style="align-self:stretch" data-reset>Done</button></div>`;
+  },
+  click(t) {
+    if (t.dataset.go) { this.s.step = t.dataset.go; return true; }
+    if (t.dataset.cur) { this.s.cur = t.dataset.cur; return true; }
+    if (t.dataset.idr) { this.s.idr = +t.dataset.idr; return true; }
+    if ('reset' in t.dataset) { this.reset(); return true; }
+  }
+};
+
+/* ---------- Concept 4: Backup without the fear ---------- */
+const backup = {
+  s: { step: 'why', ans: null, opt: 'cloud' },
+  reset() { this.s = { step: 'why', ans: null, opt: 'cloud' }; },
+  render() {
+    const s = this.s, idx = ['why','quiz','choose','done'].indexOf(s.step), right = s.ans === 'never';
+    const bars = `<div class="bars">${[0,1,2].map(i=>`<div class="${i<=Math.min(idx,2)?'on':''}"></div>`).join('')}</div>`;
+    if (s.step === 'why') return `<div class="screen">${bars}
+      <div style="font-size:26px;font-weight:800;line-height:1.2;letter-spacing:-.5px">Protect your money if you lose this phone</div>
+      <p style="margin:0;color:#3D424C;line-height:1.55">This wallet belongs only to you. That's the good part. It also means nobody, including us, can get it back for you without a backup.</p>
+      <div style="display:flex;flex-direction:column;gap:12px">${['Your backup is the only way back into this wallet on a new phone.','Anyone who has your backup can take your money.','We will never ask for it. Not by chat, email or phone.'].map((t,i)=>`<div class="card row" style="align-items:flex-start;border-radius:16px;padding:14px"><div class="avatar" style="width:28px;height:28px;font-size:13px">${i+1}</div><div style="font-size:14px;line-height:1.5">${t}</div></div>`).join('')}</div>
+      <button class="cta" data-go="quiz">Got it</button></div>`;
+    if (s.step === 'quiz') return `<div class="screen">${bars}
+      <div class="small muted" style="font-weight:700;text-transform:uppercase;letter-spacing:.6px">Quick check</div>
+      <div style="font-size:22px;font-weight:800;line-height:1.3">Someone from "wallet support" messages you and asks for your recovery words. What do you do?</div>
+      <div style="display:flex;flex-direction:column;gap:10px">${[['share','Send them the words so they can help'],['photo','Send a screenshot instead of typing them'],['never','Never share them. Real support will never ask']].map(([id,t])=>`<button data-ans="${id}" style="min-height:56px;padding:12px 16px;border-radius:16px;border:${s.ans===id?(id==='never'?'2px solid var(--ok)':'2px solid #B3261E'):'1px solid var(--line)'};background:#fff;text-align:left;font-size:15px;font-weight:600">${t}</button>`).join('')}</div>
+      ${s.ans?`<div style="font-size:14px;line-height:1.5;padding:12px 14px;border-radius:14px;background:${right?'var(--ok-bg)':'var(--bad-bg)'};color:${right?'#13502F':'var(--bad)'}">${right?'Exactly. Anyone asking for your words is trying to steal from you.':'Not quite. Whoever has your words controls your money, so nobody legitimate will ask.'}</div>`:''}
+      <button class="cta" data-go="choose" ${right?'':'disabled'}>Continue</button></div>`;
+    if (s.step === 'choose') return `<div class="screen">${bars}
+      <div style="font-size:24px;font-weight:800">Choose your backup</div>
+      ${[['cloud','Encrypted cloud backup','Easiest','Your recovery key is encrypted with a password only you know, then saved to your own cloud account.'],['words','Write down 12 words','Advanced','Full control, on paper. Keep it somewhere safe and never photograph it.']].map(([id,t,tag,b])=>`<button data-opt="${id}" style="display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:18px;border:${s.opt===id?'2px solid var(--accent)':'1px solid var(--line)'};background:#fff;text-align:left"><span class="row" style="justify-content:space-between;width:100%"><b style="font-size:16px">${t}</b><span class="badge" style="${id==='words'?'background:#F1EFEA;color:#3D424C':''}">${tag}</span></span><span class="small" style="color:#3D424C;line-height:1.5">${b}</span></button>`).join('')}
+      <div class="muted" style="font-size:12px">You can add the other method later in Settings.</div>
+      <button class="cta" data-go="done">${s.opt==='cloud'?'Set a backup password':'Show my 12 words'}</button></div>`;
+    return `<div class="screen center" style="padding-top:64px">${bars}<div class="okc" style="margin-top:24px">${icon.shield}</div><div style="font-size:24px;font-weight:800">Your wallet is backed up</div><p style="margin:0;color:#3D424C;line-height:1.55">${s.opt==='cloud'?'Encrypted backup saved to your cloud. You only need your password to restore it.':'Words confirmed. Keep the paper somewhere safe and offline.'}</p><button class="cta" style="align-self:stretch" data-reset>Go to wallet</button></div>`;
+  },
+  click(t) {
+    if (t.dataset.go) { if (t.disabled) return; this.s.step = t.dataset.go; return true; }
+    if (t.dataset.ans) { this.s.ans = t.dataset.ans; return true; }
+    if (t.dataset.opt) { this.s.opt = t.dataset.opt; return true; }
+    if ('reset' in t.dataset) { this.reset(); return true; }
+  }
+};
+
+/* ---------- Shell ---------- */
+const concepts = [
+  { m: send, t: 'Send without picking a network', d: 'Pick a person, the wallet picks the cheapest safe route, fees shown in dollars.' },
+  { m: look, t: 'Look-alike address check', d: 'Catch address-poisoning scams before money leaves.' },
+  { m: req, t: 'Request in Rupiah', d: 'Ask in your own currency, share one link, receive USDT.' },
+  { m: backup, t: 'Backup without the fear', d: 'Explain first, check understanding, then offer an encrypted backup.' }
+];
+let cur = send;
+const phone = $('#phone');
+function draw() { phone.innerHTML = cur.render(); }
+function renderTabs() {
+  $('#tabs').innerHTML = concepts.map((c, i) => `<button class="tab" role="tab" aria-selected="${c.m === cur}" data-tab="${i}"><i>${i + 1}</i><div><b>${c.t}</b><span>${c.d}</span></div></button>`).join('');
+}
+$('#tabs').addEventListener('click', (e) => { const b = e.target.closest('[data-tab]'); if (!b) return; cur = concepts[+b.dataset.tab].m; cur.reset(); renderTabs(); draw(); });
+phone.addEventListener('click', (e) => { const t = e.target.closest('button'); if (!t || t.disabled) return; if (cur.click(t)) draw(); });
+phone.addEventListener('input', (e) => { if (cur.input) cur.input(e); });
+renderTabs(); draw();
+</script>
+</body>
+</html>

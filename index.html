@@ -401,8 +401,91 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:12px;ba
 .vf.found .vfok{transform:scale(1);opacity:1}
 .vf.found .vfok path{stroke-dasharray:60;stroke-dashoffset:60;animation:draw .4s .35s ease-out forwards}
 .vfcap.swap{animation:fadeUp .3s ease both}
+
+/* ---------- modern fintech layer ---------- */
+.cta,.ghost{border-radius:28px}
+.hold .arw{position:absolute;right:8px;top:8px;width:40px;height:40px;border-radius:20px;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,currentColor 14%,transparent)}
+.hold.held .arw{opacity:0}
+.hero{margin:-58px -22px 0;padding:58px 22px 66px;border-radius:0 0 34px 34px;color:#fff;position:relative;overflow:hidden;background:radial-gradient(120% 90% at 85% 0%,rgba(110,125,255,.38) 0%,rgba(110,125,255,0) 55%),radial-gradient(80% 70% at 0% 100%,rgba(45,190,123,.18) 0%,rgba(45,190,123,0) 60%),linear-gradient(170deg,#1A1D26 0%,#0C0D11 100%);box-shadow:0 18px 40px rgba(12,13,17,.25)}
+.hero::after{content:'';position:absolute;inset:0;border-radius:inherit;border:1px solid rgba(255,255,255,.06);pointer-events:none}
+.hero.sm{padding-bottom:20px;display:flex;flex-direction:column;gap:14px}
+.hero.dim{opacity:.55}
+.hero .h{color:#fff}
+.glassbtn,.back.glass{width:40px;height:40px;border-radius:20px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08);color:#fff;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px)}
+.glassbtn:hover,.back.glass:hover{background:rgba(255,255,255,.16);box-shadow:none}
+.avatar.me{background:linear-gradient(135deg,#6E7DFF,#2DBE7B);color:#fff}
+.balwrap{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:18px;position:relative;z-index:1}
+.curpill{display:flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);color:#fff;border-radius:16px;padding:4px 10px 4px 5px;font-size:12px;font-weight:700}
+.curpill:hover{box-shadow:none;background:rgba(255,255,255,.14)}
+.coin-i{font-style:normal;width:20px;height:20px;border-radius:10px;background:#2DBE7B;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.avail{font-size:12px;color:#9AA0AA;display:flex;align-items:center;gap:6px;margin-top:4px}
+.eyeb{width:24px;height:24px;border-radius:12px;border:0;background:rgba(255,255,255,.1);color:#C9CCD3;display:flex;align-items:center;justify-content:center;padding:0}
+.eyeb svg{width:14px;height:14px}.eyeb:hover{box-shadow:none}
+.bigbal{font-size:44px;font-weight:800;letter-spacing:-1.5px;line-height:1.05;font-variant-numeric:tabular-nums;color:#fff}
+.bigbal .dec{font-size:24px;color:rgba(255,255,255,.45);letter-spacing:-.5px}
+.delta{font-size:12px;font-weight:700;color:#FF8F8A;animation:deltaFade 2.8s ease forwards}
+@keyframes deltaFade{0%{opacity:0;transform:translateY(-4px)}12%{opacity:1;transform:none}75%{opacity:1}100%{opacity:0}}
+.gacts{display:flex;gap:8px;margin-top:14px}
+.gbtn{display:flex;align-items:center;gap:6px;height:42px;padding:0 14px 0 6px;border-radius:21px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08);color:#fff;font-size:13px;font-weight:700;backdrop-filter:blur(10px)}
+.gbtn svg{width:30px;height:30px;padding:7px;border-radius:15px;background:rgba(255,255,255,.12)}
+.gbtn:first-child svg{background:#fff;color:#15171C}
+.gbtn.round{width:42px;padding:0;justify-content:center}
+.gbtn.round svg{background:none;padding:0;width:20px;height:20px}
+.gbtn:hover{box-shadow:none;background:rgba(255,255,255,.15)}
+.qsend{margin-top:-58px;position:relative;z-index:2}
+.qlabel{font-size:11px;font-weight:700;color:#9AA0AA;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.qrow{display:flex;gap:14px}
+.qrow .q{width:56px;color:var(--ink)}
+.qrow .q span{font-size:12px;font-weight:600}
+.qrow .avatar{width:52px;height:52px;border:3px solid var(--ground);box-shadow:0 6px 16px rgba(12,13,17,.18)}
+.qrow .avatar.add{background:var(--card);color:var(--ink);border:3px solid var(--ground)}
+.sech{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.sech b{font-size:16px}
+.sech .link{display:flex;align-items:center;gap:4px;min-height:auto}
+.sech .link svg{width:14px;height:14px}
+.ovc{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:2px;position:relative;overflow:hidden}
+.ovi{width:28px;height:28px;border-radius:14px;background:var(--soft);display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.ovi svg{width:15px;height:15px}
+.ovv{font-size:18px;letter-spacing:-.3px}
+.spark{margin-top:6px;align-self:flex-end}
+.spark path{stroke-dasharray:200;stroke-dashoffset:200;animation:draw 1.2s .35s cubic-bezier(.22,1,.36,1) forwards}
+.screen.still .spark path{animation:none;stroke-dashoffset:0}
+.actl{padding:4px 14px}
+.actl .tx:last-child{border-bottom:0}
+.screen.has-tabbar{padding-bottom:110px}
+.tabbar{position:absolute;left:18px;right:18px;bottom:22px;z-index:15;height:62px;border-radius:31px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;background:color-mix(in srgb,var(--card) 78%,transparent);border:1px solid var(--line);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);box-shadow:0 14px 34px rgba(12,13,17,.18);animation:tabIn .55s .15s cubic-bezier(.22,1,.36,1) both}
+@keyframes tabIn{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
+.tb{height:46px;min-width:46px;border-radius:23px;border:0;background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px;padding:0 12px;font-size:13px;font-weight:700}
+.tb:hover{box-shadow:none;color:var(--ink)}
+.tb.on{background:var(--cta);color:var(--on-cta);padding:0 16px}
+.tb.on span{animation:fadeUp .3s ease both}
+.hero .search.glass{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);color:#9AA0AA}
+.hero .search.glass input{color:#fff}
+.hero .search.glass input::placeholder{color:#8B919C}
+.qrow.light .avatar{border-color:var(--ground)}
+.done-screen{padding-bottom:0;background:color-mix(in srgb,var(--ground) 30%,#0C0D11)!important}
+.done-screen .hero.dim{opacity:.35;box-shadow:none}
+.screen>.succsheet{margin:auto -22px 0;background:var(--card);border-radius:32px 32px 0 0;padding:12px 22px 34px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;box-shadow:0 -20px 50px rgba(12,13,17,.25);animation:sheetUp .6s .05s cubic-bezier(.22,1,.36,1) both}
+.succsheet .grab{margin-bottom:8px}
+.succsheet .okc{width:76px;height:76px;margin-bottom:4px}
+.succamt{font-size:40px;font-weight:800;letter-spacing:-1.2px;font-variant-numeric:tabular-nums}
+.chipto{display:flex;align-items:center;gap:8px;background:var(--soft);border-radius:18px;padding:4px 12px 4px 4px;font-size:13px;font-weight:600}
+.chipto .avatar{width:26px;height:26px;font-size:10px}
+.succsheet .card{width:100%;padding:14px 16px}
+.succsheet .cta{margin-top:6px}
+:root[data-theme="dark"] .hero{background:radial-gradient(120% 90% at 85% 0%,rgba(110,125,255,.30) 0%,rgba(110,125,255,0) 55%),radial-gradient(80% 70% at 0% 100%,rgba(45,190,123,.14) 0%,rgba(45,190,123,0) 60%),linear-gradient(170deg,#1C1F29 0%,#111318 100%)}
+:root[data-theme="dark"] .tabbar{box-shadow:0 14px 34px rgba(0,0,0,.5)}
+/* dynamic-island toasts */
+.toast{top:11px;left:50%;right:auto;width:max-content;max-width:340px;min-height:34px;transform:translateX(-50%);background:#0B0C0F!important;color:#fff!important;border-radius:20px;padding:9px 16px;font-size:12.5px;align-items:center;border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 30px rgba(0,0,0,.35);animation:islandIn .55s cubic-bezier(.34,1.3,.64,1) both;transition:none}
+.toast>*{animation:fadeUp .3s .18s ease both}
+.toast::before{content:'';width:8px;height:8px;border-radius:4px;background:#6E7DFF;flex-shrink:0}
+.toast.ok::before{background:#2DBE7B}.toast.bad::before{background:#FF5A52}
+.toast.banner{padding:10px 14px;border-radius:24px}.toast.banner::before{display:none}
+.toast.out{animation:islandOut .35s cubic-bezier(.4,0,1,1) forwards;transform:translateX(-50%);opacity:1}
+@keyframes islandIn{from{clip-path:inset(0 calc(50% - 59px) calc(100% - 34px) calc(50% - 59px) round 17px);opacity:.6}to{clip-path:inset(0 0 0 0 round 20px);opacity:1}}
+@keyframes islandOut{to{clip-path:inset(0 calc(50% - 59px) calc(100% - 34px) calc(50% - 59px) round 17px);opacity:0}}
 @media (max-width:900px){.side{position:static}}
-@media (max-width:440px){.phone{border-radius:0;box-shadow:none;height:800px}.page{padding:24px 0 48px;gap:28px}.side{padding:0 16px}.sbar,.island,.homebar{display:none}.screen{padding-top:24px}.toast{top:16px}}
+@media (max-width:440px){.hero{margin-top:-24px;padding-top:28px}.phone{border-radius:0;box-shadow:none;height:800px}.page{padding:24px 0 48px;gap:28px}.side{padding:0 16px}.sbar,.island,.homebar{display:none}.screen{padding-top:24px}.toast{top:16px}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.okc path{stroke-dashoffset:0}}
 </style>
 </head>
@@ -461,11 +544,16 @@ const icon = {
   warn: sv('<path d="M12 3l9.5 17h-19z"/><path d="M12 10v4"/><path d="M12 17.5v.5"/>', 22),
   del: sv('<path d="M21 5H9l-6 7 6 7h12a1 1 0 001-1V6a1 1 0 00-1-1z"/><path d="M12 9l6 6"/><path d="M18 9l-6 6"/>', 24, 2),
   tick: '',
+  home: sv('<path d="M4 11l8-7 8 7v8a1 1 0 01-1 1h-4v-6h-6v6H5a1 1 0 01-1-1z"/>', 20),
+  bell: sv('<path d="M6 16V11a6 6 0 0112 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 004 0"/>', 18),
+  chev: sv('<path d="M6 9l6 6 6-6"/>', 14, 2.4),
+  arrowR: sv('<path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>', 18, 2.4),
+  more: sv('<circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/>', 20, 2.4),
   tickS: sv('<path d="M5 12.5l4.5 4.5L19 7.5"/>', 18, 2.8)
 };
 const backBtn = (to) => `<button class="back" data-go="${to}" aria-label="Back">${icon.back}</button>`;
 const hdr = (back, title, sub) => `<div class="row">${back ? backBtn(back) : ''}<div>${sub ? `<div class="small muted">${sub}</div>` : ''}<h2 class="h">${title}</h2></div></div>`;
-const holdBtn = (name, label, disabled = false, cls = '') => `<button class="cta hold ${cls}" data-hold="${name}" ${disabled ? 'disabled' : ''} aria-label="${esc(label)}. Press and hold to confirm"><span>${label}</span></button>`;
+const holdBtn = (name, label, disabled = false, cls = '') => `<button class="cta hold ${cls}" data-hold="${name}" ${disabled ? 'disabled' : ''} aria-label="${esc(label)}. Press and hold to confirm"><span>${label}</span><i class="arw" aria-hidden="true">${icon.arrowR}</i></button>`;
 const sheet = (name, title, inner) => `<div class="sheet-wrap" data-sheet="${name}"><div class="scrim" data-close></div><div class="sheet" role="dialog" aria-label="${esc(title)}"><div class="grab"></div><div class="h">${title}</div>${inner}</div></div>`;
 const keypad = (idr) => `<div class="pad">${['1','2','3','4','5','6','7','8','9',idr ? '000' : '.','0','del'].map((k) => `<button class="key" data-key="${k}" aria-label="${k === 'del' ? 'Delete' : k}">${k === 'del' ? icon.del : k}</button>`).join('')}</div>`;
 
@@ -517,6 +605,13 @@ const contacts = [
 ];
 const initialWallet = () => ({ bal: 1240.5, hist: [{ c: 'RP', n: 'Rina Putri', d: 'Sent · Oct 4', a: -120 }, { c: 'SK', n: 'Studio Kopi', d: 'Received · Oct 1', a: 850 }, { c: 'BS', n: 'Budi Santoso', d: 'Sent · Sep 22', a: -40 }] });
 let wallet = initialWallet();
+const bigMoney = (n) => { const [i, d] = Math.abs(n).toFixed(2).split('.'); return '$' + (+i).toLocaleString('en-US') + '<span class="dec">.' + d + '</span>'; };
+function countBig(el, to, from, ms = 1100) {
+  if (!el) return; if (reduce) { el.innerHTML = bigMoney(to); return; }
+  const t0 = performance.now(); const f = (now) => { const p = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - p, 3); el.innerHTML = bigMoney(from + (to - from) * e); if (p < 1) requestAnimationFrame(f); }; requestAnimationFrame(f);
+}
+const spark = (pts, color) => { const mx = Math.max(...pts), mn = Math.min(...pts), w = 96, h = 30; const d = pts.map((v, i) => (i ? 'L' : 'M') + (i * w / (pts.length - 1)).toFixed(1) + ' ' + (h - 3 - (v - mn) / (mx - mn || 1) * (h - 6)).toFixed(1)).join(' '); return `<svg class="spark" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" aria-hidden="true"><path d="${d}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`; };
+const tabbar = (on) => `<nav class="tabbar" aria-label="Wallet">${[['home', 'Home', icon.home, 'tabhome'], ['send', 'Send', icon.send, 'to'], ['req', 'Request', icon.recv, 'req'], ['scan', 'Scan', icon.scan, 'scan'], ['safe', 'Backup', icon.shieldS, 'tabsafe']].map(([k, l, ic, a]) => `<button class="tb${k === on ? ' on' : ''}" data-act="${a}" aria-label="${l}">${ic}${k === on ? `<span>${l}</span>` : ''}</button>`).join('')}</nav>`;
 const popWrap = (str, n) => n ? str.slice(0, -n) + `<span class="pop">${str.slice(-n)}</span>` : str;
 const fmtTyped = (a) => { const [i, d] = a.split('.'); return '$' + (+i).toLocaleString('en-US') + (d !== undefined ? '.' + d : ''); };
 const send = {
@@ -531,28 +626,42 @@ const send = {
   },
   s: {},
   reset() { wallet = initialWallet(); this.s = { step: 'home', to: null, amt: '50', net: 'auto', sheet: null, q: '', hide: false, applied: false, shake: null }; },
+  dark() { return ['home', 'to', 'done'].includes(this.s.step); },
   route() { const s = this.s; if (s.net !== 'auto') return { k: s.net, ...nets[s.net] }; const k = s.to.acc.slice().sort((a, b) => nets[a].fee - nets[b].fee)[0]; return { k, ...nets[k] }; },
   start(c) { const s = this.s; s.to = c; s.amt = '50'; s.net = 'auto'; s.applied = false; s.step = 'amount'; },
   render() {
     const s = this.s, w = wallet;
     if (s.step === 'home') {
-      const fb = s.flipBal; s.flipBal = false;
-      const html = `<div class="screen">
-      <div class="row" style="justify-content:space-between"><div class="row" style="gap:10px"><div class="avatar sm" style="background:var(--cta);color:var(--on-cta)">AE</div><div><div class="tiny muted">Hi, Angga</div><b>My wallet</b></div></div><span class="pill">${icon.lock} Self-custodial</span></div>
-      <div class="bal">
-        <div class="row" style="justify-content:space-between;position:relative;z-index:1"><span class="small" style="color:#C9CCD3">USDT balance</span><button class="eye" data-act="hide" aria-label="${s.hide ? 'Show' : 'Hide'} balance">${s.hide ? icon.eyeOff : icon.eye}</button></div>
-        <span class="big${fb ? ' swapv' : ''}">${s.hide ? '$ • • • • •' : money(s.animBal != null ? s.animBal : w.bal)}</span>
-        <span class="small" style="color:#C9CCD3">${s.hide ? 'Hidden. Tap the eye to show' : usdtF(w.bal) + ' USDT · 1 USDT ≈ $1.00'}</span>
-        <div class="acts">${[['to', 'Send', icon.send], ['recv', 'Receive', icon.recv], ['req', 'Request', icon.plus], ['scan', 'Scan', icon.scan]].map(([k, l, ic]) => `<button class="act" data-act="${k}"><span>${ic}</span>${l}</button>`).join('')}</div>
+      const fb = s.flipBal, delta = s.delta; s.flipBal = false; s.delta = null;
+      const recv = w.hist.filter((h) => h.a > 0).reduce((a, h) => a + h.a, 0), sent = w.hist.filter((h) => h.a < 0).reduce((a, h) => a - h.a, 0);
+      const html = `<div class="screen has-tabbar">
+      <div class="hero">
+        <div class="row" style="justify-content:space-between"><div class="row" style="gap:10px"><div class="avatar sm me">AE</div><div><div class="tiny" style="color:#9AA0AA">Hi, welcome back</div><b style="color:#fff">Angga</b></div></div><button class="glassbtn" data-act="bell" aria-label="Notifications">${icon.bell}</button></div>
+        <div class="balwrap">
+          <button class="curpill" data-act="cur"><i class="coin-i">₮</i>USDT ${icon.chev}</button>
+          <div class="avail">Available balance <button class="eyeb" data-act="hide" aria-label="${s.hide ? 'Show' : 'Hide'} balance">${s.hide ? icon.eyeOff : icon.eye}</button></div>
+          <div class="bigbal${fb ? ' swapv' : ''}" id="bigbal">${s.hide ? '$ ••••••' : bigMoney(s.animBal != null ? s.animBal : w.bal)}</div>
+          ${delta ? `<div class="delta">−${money(delta)}</div>` : ''}
+          <div class="gacts">${[['to', 'Send', icon.send], ['req', 'Request', icon.recv], ['scan', 'Scan', icon.scan]].map(([k, l, ic]) => `<button class="gbtn" data-act="${k}">${ic}<span>${l}</span></button>`).join('')}<button class="gbtn round" data-act="more" aria-label="More">${icon.more}</button></div>
+        </div>
       </div>
-      <div><div class="sec">Send again</div><div class="quick">${contacts.map((c) => `<button class="q" data-quick="${c.id}"><div class="avatar" style="background:${c.col}">${c.init}</div><span>${c.name.split(' ')[0]}</span></button>`).join('')}</div></div>
-      <div><div class="sec">Activity</div>${w.hist.slice(0, 4).map((h) => `<div class="tx${h.fresh ? ' fresh' : ''}"><div class="avatar">${h.c}</div><div style="flex:1"><b style="font-size:15px">${h.n}</b><div class="small muted">${h.d}</div></div><b style="color:${h.a > 0 ? 'var(--ok)' : 'var(--ink)'}">${h.a > 0 ? '+' : '−'}${money(Math.abs(h.a))}</b></div>`).join('')}</div>
-      <div class="foot">Concept by Angga Ady Ermawan</div></div>`;
+      <div class="qsend"><div class="qlabel">Quick send</div><div class="qrow">${contacts.map((c) => `<button class="q" data-quick="${c.id}"><div class="avatar" style="background:${c.col}">${c.init}</div><span>${c.name.split(' ')[0]}</span></button>`).join('')}<button class="q" data-act="paste"><div class="avatar add">${icon.plus}</div><span>New</span></button></div></div>
+      <div><div class="sech"><b>Overview</b><span class="tiny muted">This month</span></div>
+        <div class="grid2">
+          <div class="ovc"><span class="ovi">${icon.recv}</span><span class="tiny muted">Received</span><b class="ovv" style="color:var(--ok)">+${money(recv)}</b>${spark([3, 4, 3.5, 5, 4.6, 6.5, 8], 'var(--ok)')}</div>
+          <div class="ovc"><span class="ovi">${icon.send}</span><span class="tiny muted">Sent</span><b class="ovv">−${money(sent)}</b>${spark([6, 5, 6.5, 5.5, 7, 6.6, 7.5 + Math.min(4, (sent - 160) / 40)], 'var(--bad)')}</div>
+        </div></div>
+      <div><div class="sech"><b>Recent activity</b><button class="link" data-act="to" style="text-decoration:none">Send ${icon.arrowR}</button></div><div class="card actl">${w.hist.slice(0, 4).map((h) => `<div class="tx${h.fresh ? ' fresh' : ''}"><div class="avatar">${h.c}</div><div style="flex:1"><b style="font-size:15px">${h.n}</b><div class="small muted">${h.d}</div></div><b style="color:${h.a > 0 ? 'var(--ok)' : 'var(--ink)'}">${h.a > 0 ? '+' : '−'}${money(Math.abs(h.a))}</b></div>`).join('')}</div></div>
+      <div class="foot">Concept by Angga Ady Ermawan</div></div>${tabbar('home')}`;
       w.hist.forEach((h) => (h.fresh = false));
       return html;
     }
-    if (s.step === 'to') return `<div class="screen">${hdr('home', 'Send to')}
-      <label class="search">${icon.search}<input id="q" type="search" placeholder="Search a name" value="${esc(s.q)}" aria-label="Search contacts" autocomplete="off"></label>
+    if (s.step === 'to') return `<div class="screen">
+      <div class="hero sm">
+        <div class="row">${'<button class="back glass" data-go="home" aria-label="Back">' + icon.back + '</button>'}<h2 class="h" style="color:#fff">Send to</h2></div>
+        <label class="search glass">${icon.search}<input id="q" type="search" placeholder="Search name or address" value="${esc(s.q)}" aria-label="Search contacts" autocomplete="off"></label>
+      </div>
+      <div><div class="sec">Frequently sent</div><div class="qrow light">${contacts.map((c) => `<button class="q" data-quick="${c.id}"><div class="avatar" style="background:${c.col}">${c.init}</div><span>${c.name.split(' ')[0]}</span></button>`).join('')}<button class="q" data-act="paste"><div class="avatar add">${icon.plus}</div><span>New</span></button></div></div>
       <div><div class="sec">People you've paid</div><div class="list">${contacts.map((c) => `<button class="pick" data-contact="${c.id}" data-name="${c.name.toLowerCase()}"><div class="avatar" style="background:${c.col}">${c.init}</div><div style="flex:1"><b style="font-size:15px">${c.name}</b><div class="tiny muted">${c.meta}</div></div><span class="badge">${c.badge}</span></button>`).join('')}<div class="small muted" id="none" style="display:none;padding:8px 2px">No saved contact with that name.</div></div></div>
       <button class="pick dashed" data-act="paste"><div class="avatar" style="background:var(--card);border:1px dashed var(--line3);color:var(--ink)">${icon.plus}</div><div><b style="font-size:15px">Paste a new address</b><div class="tiny muted">We check it before you can send</div></div></button></div>`;
     const r = this.route(), amt = parseFloat(s.amt) || 0, first = s.to.name.split(' ')[0];
@@ -587,10 +696,18 @@ const send = {
     if (s.step === 'sending') return `<div class="screen center" style="justify-content:center;gap:20px"><div class="xfer"><div class="avatar" style="background:var(--cta);color:var(--on-cta);width:52px;height:52px">AE</div><div class="track"><span class="tfill"></span><span class="rail"><span class="coin">$</span></span></div><div class="avatar dest" style="background:${s.to.col};width:52px;height:52px">${s.to.init}</div></div><h2 class="h">Sending ${money(amt)} to ${first}</h2>
       <div class="card tl">${['Leaving your wallet', 'Confirmed on ' + r.name, 'Arriving in ' + first + '\'s wallet'].map((t) => `<div class="tlr"><span class="dot"></span><span>${t}</span></div>`).join('')}</div>
       <p class="small muted" style="max-width:270px">You can close the app. We'll tell you both the moment it arrives.</p></div>`;
-    return `<div class="screen center" style="padding-top:84px"><div class="okc">${icon.check}</div><div class="h1">Arrived</div><p style="color:var(--ink2)">${first} received <b id="arr">${money(amt)}</b>. They've been notified.</p>
-      <div class="card tl">${[['Left your wallet', 'now'], ['Confirmed on ' + r.name, '+8s'], ['Arrived in ' + first + '\'s wallet', r.eta.replace('~', '')]].map((x) => `<div class="tlr ok"><span class="dot"></span><span>${x[0]}</span><span class="t">${x[1]}</span></div>`).join('')}</div>
-      <p class="tiny muted">Paid ${money(r.fee)} fee on ${r.name} · Receipt saved</p>
-      <button class="cta" data-act="finish">Back to wallet</button></div>`;
+    return `<div class="screen done-screen">
+      <div class="hero sm dim"><div class="row"><span class="back glass">${icon.back}</span><h2 class="h" style="color:#fff">Send to ${first}</h2></div></div>
+      <div class="succsheet">
+        <div class="grab"></div>
+        <div class="okc">${icon.check}</div>
+        <div class="small muted" style="font-weight:600">Transfer successful</div>
+        <div class="succamt" id="arr">${money(amt)}</div>
+        <div class="chipto"><div class="avatar" style="background:${s.to.col}">${s.to.init}</div>Sent to ${s.to.name}</div>
+        <div class="card tl" style="text-align:left">${[['Left your wallet', 'now'], ['Confirmed on ' + r.name, '+8s'], ['Arrived in ' + first + '\'s wallet', r.eta.replace('~', '')]].map((x) => `<div class="tlr ok"><span class="dot"></span><span>${x[0]}</span><span class="t">${x[1]}</span></div>`).join('')}</div>
+        <p class="tiny muted">Paid ${money(r.fee)} fee on ${r.name} · Receipt saved</p>
+        <button class="cta" data-act="finish">Done</button>
+      </div></div>`;
   },
   enter(step) {
     const s = this.s;
@@ -635,9 +752,12 @@ const send = {
     if (a === 'scan') { switchTo(4); return false; }
     if (a === 'sheetnet') { s.sheet = 'net'; return true; }
     if (a === 'paste') { look.reset(); look.s.from = 'send'; switchTo(1, true); return false; }
-    if (a === 'finish') { s.step = 'home'; T.later(() => toast('Balance and activity updated', 'ok'), 450); return true; }
+    if (a === 'finish') { s.step = 'home'; s.delta = parseFloat(s.amt) + this.route().fee; T.later(() => toast('Balance updated', 'ok'), 450); return true; }
+    if (a === 'tabhome') { return false; }
+    if (a === 'tabsafe') { switchTo(3); return false; }
+    if (a === 'bell' || a === 'cur' || a === 'more') { toast(a === 'cur' ? 'USDT is the only currency in this concept' : 'Not part of this concept'); return false; }
   },
-  after() { const s = this.s; if (s.step === 'home' && s.animBal != null) { const from = s.animBal; s.animBal = null; if (!s.hide) T.later(() => countUp($('.bal .big'), wallet.bal, money, 1100, from), 350); } },
+  after() { const s = this.s; if (s.step === 'home' && s.animBal != null) { const from = s.animBal; s.animBal = null; if (!s.hide) T.later(() => countBig($('#bigbal'), wallet.bal, from), 350); } },
   hold(name) { if (name === 'send') { this.s.step = 'sending'; return true; } },
   input(e) {
     if (e.target.id !== 'q') return;
